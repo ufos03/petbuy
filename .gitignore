@@ -3,15 +3,9 @@
 # ==========================================
 
 # Ignora WooCommerce e Dokan (plugin ufficiali)
-plugins/dokan/
-plugins/dokan-lite/
-plugins/dokan-pro/
 
 # Ignora plugin di cache e SEO non necessari in staging/prod
 plugins/litespeed-cache/
-plugins/redis-cache/
-plugins/seo-by-rank-math/
-plugins/seo-by-rank-math-pro/
 
 # Ignora TUTTI i file di configurazione
 # (utile per evitare chiavi/API o config locali)
