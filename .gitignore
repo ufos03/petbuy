@@ -3,7 +3,6 @@
 # ==========================================
 
 # Ignora WooCommerce e Dokan (plugin ufficiali)
-plugins/woocommerce/
 plugins/dokan/
 plugins/dokan-lite/
 plugins/dokan-pro/
