@@ -1,0 +1,70 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+.new-post-mask
+{
+	position: fixed;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  width: 100vw;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+	opacity: 0;
+  transition: all 150ms ease-in;
+	pointer-events: none;
+}
+
+.new-post-active
+{
+	visibility: visible;
+	opacity: 1;
+	transition: all 150ms ease-in;
+	pointer-events: auto;
+}
+
+.new-post-popup
+{
+	border-radius: 14px !important;
+	width: 23% !important;
+}
+
+.sagoma-petbuy
+{
+	margin-top: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 10rem;
+	width: 90%;
+}
+
+.sagoma-petbuy > img
+{
+	height: 100% !important;
+}
+
+input[type="file"]::file-selector-button {
+  border-radius: 4px;
+  padding: 0 16px;
+  height: 2.6rem;
+  cursor: pointer;
+  background-color: #fff !important;
+  color: var(--primary-color) !important;
+  border: 1px solid var(--primary-color);
+  box-shadow: 0px 1px 0px var(--primary-color);
+  margin-right: 16px;
+  transition: background-color 200ms;
+}
+
+/* file upload button hover state */
+input[type="file"]::file-selector-button:hover {
+  color: #FFF !important;
+  background-color: var(--primary-color) !important;
+}
+
+/* file upload button active state */
+input[type="file"]::file-selector-button:active {
+  background-color: #e5e7eb;
+}</style>
+<!-- end Simple Custom CSS and JS -->

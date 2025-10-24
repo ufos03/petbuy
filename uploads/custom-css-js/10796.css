@@ -1,0 +1,73 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+.otc {
+	position: relative;
+	width: 320px;
+	margin: 0 auto;
+}
+
+.otc fieldset {
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.otc fieldset div {
+	display: flex;
+	align-items: center;
+	justify-content: center
+}
+
+.otc legend {
+	margin: 0 auto 1em;
+	color: black;
+	font-weight: bold;
+}
+
+.single-digit {
+	width: .86em !important;
+	line-height: 1 !important;
+	margin: .1em !important;
+	padding: 8px 0 4px !important;
+	font-size: 2.65em !important;
+	text-align: center !important;
+	appearance: textfield !important;
+	-webkit-appearance: textfield !important;
+	height: auto !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 2 groups of 3 items */
+input[type="number"]:nth-child(n+4) {
+	order: 2;
+}
+.otc div::before {
+	content: '';
+	height: 2px;
+	width: 12px;
+	margin: 0 .25em;
+	order: 1;
+	background: black;
+	border-radius: 2px;
+	opacity: .8;
+}
+
+.otc label {
+	border: 0 !important;
+	clip: rect(1px, 1px, 1px, 1px) !important;
+	-webkit-clip-path: inset(50%) !important;
+	clip-path: inset(50%) !important;
+	height: 1px !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+	position: absolute !important;
+	width: 1px !important;
+	white-space: nowrap !important;
+}</style>
+<!-- end Simple Custom CSS and JS -->

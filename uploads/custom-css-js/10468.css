@@ -1,0 +1,13 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+.pt-popup
+{
+	width: 70%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60%;
+  border-radius: 14px;
+}</style>
+<!-- end Simple Custom CSS and JS -->

@@ -1,0 +1,155 @@
+
+
+:root {  /* Setto delle variabili per i colori */
+    --border-radius : 14px;
+    --border-radius-input: 6px;
+    --primary-color : #f8bb39;
+}
+
+body, html{  
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+
+.flex-center-center   /* Classe che setta tutti gli elementi al centro sia X che Y*/
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+a.petbuy-link  /* Creo uno stile per l'elemento link avente classe petbuy-link */
+{
+    color: var(--primary-color);
+    position: relative;
+    text-decoration: none;
+}
+
+a.petbuy-link::before {  /* Animazione per quando l'elemento non viene focussato */
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+a.petbuy-link:hover::before, a.petbuy-link:focus::before  /* Animazione per il link quando viene focussato */
+{
+    width: 100%;
+    transition: width 0.3s ease;
+}
+
+
+.overlay  /* Overlay su tutta pagina */
+{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* ERRORS */
+
+
+.error-box
+{
+    height: 4rem;
+    width: auto;
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius);
+    padding: 0.4rem;
+    transition: opacity 150ms ease;
+}
+
+.msg-error
+{
+    color: red;
+    font-size: 0.8rem;
+    margin-left: 0.3rem;
+}
+
+.image-error
+{
+    height: 100%;
+    width: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-error > *
+{
+    font-size: 3rem;
+    color: var(--primary-color);
+}
+
+.text-error
+{
+    color: white;
+    font-size: 1rem;
+}
+
+.hide-error
+{
+    visibility: hidden;
+    opacity: 0;
+}
+
+.show-error
+{
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/* PAGINA EMAIL INVIATA */
+
+.paragraph
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    font-size: 1rem;
+    gap: 0.5rem;
+}
+
+.paragraph > p
+{
+    margin: 0;
+}
+
+.resend-email
+{
+    font-size: .9rem;
+}
+
+/* PAGINA EMAIL VERIFICATA */
+
+.server-response
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.message
+{
+    font-size: 1rem;
+}

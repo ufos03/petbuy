@@ -1,0 +1,47 @@
+
+
+@media screen and (max-width: 768px)
+{
+    body
+    {
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+    }
+
+    html, body, .figure 
+    {
+        block-size: 100%;
+      }
+
+    #choose-box
+    {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        height: 100%;
+        gap: 0.5rem;
+    }
+
+    .lottie-animation
+    {
+        width: 150px;
+        height: 150px;
+    }
+
+    .figure
+    {
+        scroll-snap-align: start;
+    }
+
+    .role-container
+    {
+        height: 95%;
+        width: 90%;
+    }
+
+    .form-title
+    {
+        margin: 0;
+        font-weight: 600;
+    }
+}

@@ -1,0 +1,64 @@
+# ==========================================
+# Git ignore per repo dentro wp-content/
+# ==========================================
+
+# Ignora WooCommerce e Dokan (plugin ufficiali)
+plugins/woocommerce/
+plugins/dokan/
+plugins/dokan-lite/
+plugins/dokan-pro/
+
+# Ignora plugin di cache e SEO non necessari in staging/prod
+plugins/litespeed-cache/
+plugins/redis-cache/
+plugins/seo-by-rank-math/
+plugins/seo-by-rank-math-pro/
+
+# Ignora TUTTI i file di configurazione
+# (utile per evitare chiavi/API o config locali)
+*.env
+*.json
+*.yml
+*.yaml
+*.ini
+*.conf
+*.config
+*.log
+*.bak
+*.tmp
+.DS_Store
+*.dat
+*.txt
+
+# Ignora i temi WordPress di default
+themes/twenty*/
+themes/twentytwenty*/
+themes/twentytwentyone*/
+themes/twentytwentytwo*/
+themes/twentytwentythree*/
+themes/twentytwentyfour*/
+
+# Ignora eventuali cache, backup, build temporanei
+cache/
+tmp/
+backup/
+node_modules/
+vendor/
+dist/
+build/
+__pycache__/
+*.zip
+*.tar
+*.gz
+
+# Ignora file specifici dell’IDE o del sistema
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+Thumbs.db
+
+# Ignora output di plugin temporanei o custom di debug
+plugins/*/debug.log
+plugins/*/error_log

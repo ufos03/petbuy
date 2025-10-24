@@ -1,0 +1,255 @@
+#content
+{
+    width: 100%;
+    height: 100%;
+}
+
+.petbuy-page
+{
+    display: flex;
+    gap: 3rem;
+    width: 100%;
+    align-items: flex-start;
+    margin-top: 1rem;
+}
+
+#filters-container
+{
+    width: 17rem;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: sticky;
+    top: 10rem;
+    z-index: 1;
+}
+
+.price-range-section
+{
+    border: .14rem solid var(--primary-color);
+    border-radius: 14px;
+}
+
+.price-range-section > div
+{
+    padding: 0.6rem 0.3rem;
+}
+
+.buttons
+{
+    display: flex;
+    gap: 0.6rem;
+}
+
+#apply-filters, #clear-filters
+{
+    padding: initial;
+}
+
+.cards-shopper
+{
+    width: 80%;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.pagination
+{
+    width: 7.3rem !important;
+    padding: 0 !important;
+}
+
+.invisible
+{
+    width: 0;
+    height: 0;
+    display: none;
+    visibility: hidden;
+    z-index: -10;
+}
+
+.site {
+    overflow-x: unset !important;
+}
+
+.opal-contact-button
+{
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.opal-contact-button > a > i
+{
+    font-size: 1rem;
+    color: #626262;
+    font-weight: 900 !important;
+}
+
+.opal-contact-button > a > i:hover
+{
+    color: black;
+}
+
+.container-header-page
+{
+    height: 5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.header-page
+{
+    width: 75.4%;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+:root {
+    --secondary-color: #FFB74D;
+    --hover-bg: #FFE0B2;
+    --shadow: rgba(0, 0, 0, 0.05);
+    --transition: 0.3s;
+    --font-size: 16px;
+    --subcategory-font-size: 14px;
+    --subcategory-padding: 8px 20px;
+}
+
+.category-list-container {
+    width: 100%;
+}
+
+.category-list {
+    list-style: none;
+    margin: 0;
+    padding: 0.6rem 0;
+    box-shadow: 0 2px 8px var(--shadow);
+    border: 0.14rem solid var(--primary-color);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform var(--transition), opacity var(--transition);
+    position: relative;
+    width: 100%;
+}
+
+.category-item {
+    padding: 0.4rem 0.5rem;
+    cursor: pointer;
+    transition: background var(--transition), box-shadow var(--transition);
+    position: relative;
+    width: 100%;
+}
+
+.category-item:not(.active-item):hover {
+    transform: translateX(5px);
+    transition: transform var(--transition);
+}
+
+.active-item > .category-content > .category-name {
+    color: red;
+}
+
+.category-content {
+    display: flex;
+    align-items: center;
+}
+
+.category-image {
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    transition: transform var(--transition);
+    box-shadow: 0 1px 3px var(--shadow);
+}
+
+.category-item:hover .category-image {
+    transform: scale(1.05);
+}
+
+.category-name {
+    flex-grow: 1;
+    font-size: var(--font-size);
+    color: inherit;
+    font-weight: 500;
+}
+
+.subcategory-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 0;
+    transition: height var(--transition);
+    width: 100%;
+}
+
+.subcategory-item {
+    padding: var(--subcategory-padding);
+    cursor: pointer;
+    transition: color var(--transition), transform var(--transition);
+    color: inherit;
+    font-size: var(--subcategory-font-size);
+}
+
+.subcategory-item:hover {
+    color: var(--secondary-color);
+    transform: translateX(5px);
+}
+
+.mobile-menu-button {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px var(--shadow);
+    z-index: 1000;
+    transition: background var(--transition);
+}
+
+.mobile-menu-button:hover {
+    background-color: var(--secondary-color);
+}
+
+@media (max-width: 600px) {
+    .category-list-container {
+        width: 100%;
+        position: static; /* Rimuove lo sticky in modalità mobile */
+    }
+    .category-list {
+        display: none;
+    }
+    .category-list.fullscreen {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        overflow-y: auto;
+        background: var(--background-color);
+        z-index: 1000;
+    }
+    .subcategory-list {
+        height: auto;
+        overflow: visible;
+    }
+    .mobile-menu-button {
+        display: block;
+    }
+}

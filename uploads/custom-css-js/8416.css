@@ -1,0 +1,28 @@
+<!-- start Simple Custom CSS and JS -->
+<style type="text/css">
+.site-header-cart-side
+{
+	font-family: var(--e-global-typography-primary-font-family), Sans-serif;
+    font-weight: var(--e-global-typography-primary-font-weight);
+	
+}
+
+.cart-side-title, .close-cart-side
+{
+	font-size: 1.6rem !important;
+}
+
+
+@media (min-width: 1024px)
+{
+	.site-header-cart-side 
+	{
+    	width: 30rem;
+		webkit-transform: translate3d(30rem,0,0);
+    	transform: translate3d(30rem,0,0);
+	}
+
+}
+
+</style>
+<!-- end Simple Custom CSS and JS -->

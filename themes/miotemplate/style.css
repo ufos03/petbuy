@@ -1,0 +1,2759 @@
+/*
+
+Theme Name: Il Mio Tema WordPress
+Theme URI:
+Author: Vincenzo Casolino
+Author URI:
+Description: Un tema WordPress base per iniziare lo sviluppo.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI:
+Text Domain:
+
+*/
+
+
+/*inizio usato per il form di spedizione*/
+.woocommerce form .form-row .input-text,
+.woocommerce form .form-row select,
+.woocommerce form .form-row textarea {
+    
+    /* 1. Altezza Fissa */
+    /* Definisci qui l'altezza desiderata per tutti i campi. */
+    height: 50px !important; 
+    
+    /* 3. Assicura un Box Sizing Consistente */
+    box-sizing: border-box !important; 
+    
+    /* 4. Resetta le altezze predefinite delle Textarea */
+    /* Questo assicura che anche le textarea abbiano altezza fissa */
+    min-height: 50px !important; 
+    max-height: 50px !important; 
+}
+
+/* Caso speciale: Select2 (se usato per i menu a discesa avanzati) */
+/* Questa regola copre i menu a discesa di spedizione e pagamento se usano Select2. */
+.woocommerce .select2-container .select2-selection--single {
+    height: 50px !important; /* Deve corrispondere all'altezza degli input */
+}
+
+/* E la casella di visualizzazione del testo all'interno di Select2 */
+.woocommerce .select2-container .select2-selection--single .select2-selection__rendered {
+    line-height: 48px !important; /* Adatta l'altezza della linea per centrare il testo */
+	text-align: left!important;
+	padding: 0 7px 0 7px !important;
+}
+/*fine usato per il form di spedizione*/
+
+
+
+/*nasconde pulsante "aggiorna carrello"*/
+.woocommerce-cart-form button[name="update_cart"] {
+    display: none;
+}
+
+
+/*nascondi sidebar*/
+#sidebar {
+	display: none!important;
+}
+
+
+body {
+
+
+			/* Full height */
+			/*height: 100vh;*/
+
+
+			/*direttive ufficiali*/
+			color: #1a1a1a;
+			background-color: #ffffff;
+			font-size: 18px !important;
+			/*font-family: "Mouse Memoirs", sans-serif;*/
+			font-family: "Poppins", sans-serif !important;
+			font-weight: 400 !important;
+			font-style: normal !important;
+
+
+			overflow-x: hidden;
+
+		}
+
+		body, html {
+			margin: 0 !important;
+			padding: 0 !important;
+			/*height: 100vh;*/ /*commentato per pag accedi e per pag registrati*/
+		}
+
+
+		.custom-logo {
+			height: auto;
+		}
+
+
+		a {
+		  text-decoration: none !important;
+		  color: black !important;
+		}
+
+
+		.linktopbar {
+			color: #6c757d !important;
+		}
+
+		/*ex pe-0*/
+		.menu-item-11333 {
+		  padding-right: 0 !important;
+		}
+
+
+
+.cornetta-and-co {
+	width: 28px;
+}
+
+.small {
+	font-size: 14px !important;
+}
+
+#ricerca {
+	background-color: #faf9f8;
+}
+
+
+#carouselExampleIndicators {
+		padding: 50px;
+}
+
+
+
+
+
+.noacapo {
+    white-space: nowrap;
+}
+
+
+/*******************22-3-25 categorie prodotti**************************/
+.same-height {
+	display: flex; /* Abilita Flexbox */
+}
+.col-content {
+	height: 100%; /* Rende ogni colonna uguale in altezza */
+}
+
+
+
+.overlap {
+	position: relative;
+	top: -20px; /* Adatta per la sovrapposizione */
+}
+
+.align-to-bottom {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	height: 350px; /* Altezza personalizzata per dimostrare l'allineamento */
+	/*border: 1px solid #ccc;
+	padding: 10px;*/
+}
+
+.sfondo-scatole {
+	background: url("ufficiale/sfondo-cibo-e-snacks.svg") left top no-repeat;
+	background-size: 100%;
+}
+
+.sfondo-cuccia {
+	background: url("ufficiale/sfondo-cuccia.svg") left top no-repeat;
+	background-size: 100%;
+}
+
+.sfondo-tiragraffi {
+	background: url("ufficiale/sfondo-tiragraffi.svg") left top no-repeat;
+	background-size: 100%;
+}
+/*******************22-3-25 categorie prodotti**************************/
+
+
+.carousel .carousel-indicators button {
+   width: 10px;
+   height: 10px;
+   border-radius: 100%;
+ }
+
+ .carousel .carousel-indicators .active {
+	 background-color: #f87537!important;
+ }
+
+ .image-bottom {
+
+    align-items: flex-end;
+    display: flex;
+ }
+
+ .nostre-categorie {
+	 background-color: #faede5;
+	 padding: 25px 10px 25px 10px;
+	 color: #862b00;
+ }
+
+
+ .margine-bottoni {
+ 	margin-top: 90px !important;
+ }
+
+
+
+ /***********************28-03-25 inizio pagina shop********************************/
+/* Stili opzionali per visualizzare meglio le colonne */
+        .sidebar-col {
+            background-color: #ffffff;
+            /*border-right: 1px solid #dee2e6;*/
+            /*padding: 25px !important;*/
+						/*sticky*/
+						/*width: 250px;*/ /* Imposta una larghezza per la sidebar */
+				    /* Altri stili per la tua sidebar */
+				    position: sticky;
+				    top: 60px; /* Distanza dalla parte superiore della finestra quando diventa sticky */
+				    height: fit-content; /* Fa in modo che l'altezza non superi il contenuto */
+        }
+        .content-col {
+            padding: 15px;
+        }
+
+		.spazi-riga-sidebar {
+			margin-top: 20px;
+		}
+
+		.frecce {
+			width: 22px;
+			height: auto;
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+
+		.color-arancio {
+			color: #fa9827;
+		}
+
+
+		.filtro-numero-stelle {
+			background-color: #faf9f8;
+			border-radius: 50px;
+			padding: 1px 8px 1px 8px;
+		}
+
+
+		/*inizio archive-product.php woocommerce*/
+		.star-rating-filter-container {
+		    display: flex;
+		    align-items: center; /* Allinea gli elementi verticalmente al centro */
+		    justify-content: space-between; /* Spinge gli elementi ai lati opposti */
+		    width: 100%; /* Assicura che il contenitore occupi tutta la larghezza */
+		}
+
+		.star-container {
+		    display: flex;
+		    align-items: center;
+		}
+
+		.star-link {
+		    display: inline-block;
+		    padding: 0;
+		    margin: 0;
+		}
+
+		.star-icon {
+		    width: 20px;
+		    height: 20px;
+		    margin-right: 2px;
+		    filter: grayscale(100%); /* Le stelle sono grigie di default */
+		    transition: filter 0.3s ease;
+		}
+
+		.star-link.active .star-icon,
+		.star-link:hover .star-icon {
+		    filter: grayscale(0%); /* Le stelle diventano colorate all'hover o quando sono attive */
+		}
+		/*fine archive-product.php woocommerce*/
+
+
+		/*inizio content-product.php woocommerce*/
+		.price .amount {
+		    color: #000000!important; /* Sostituisci con il colore che desideri */
+				font-size: 14px !important;
+				word-wrap: break-word;
+		}
+		/*fine content-product.php woocommerce*/
+
+		/*inizio archive-product.php woocommerce*/
+		.woocommerce-ordering .orderby {
+		    border: none; /* Elimina il bordo */
+		    outline: none; /* Rimuove il contorno blu/giallo che appare al click */
+		    box-shadow: none; /* Rimuove eventuali ombre */
+		}
+		/*fine archive-product.php woocommerce*/
+
+
+
+
+		.scheda-prodotto {
+			box-shadow: inset 0 0 0 1px #faf9f8;
+			border-radius: 10px;
+			margin-bottom: 40px;
+		}
+
+
+
+		.category-item {
+            display: flex!important;
+            align-items: center!important;
+            margin-bottom: 0.75rem !important;
+        }
+
+
+        /* Placeholder for actual images - replace with your image paths or icon implementations */
+        .category-icon-placeholder {
+            /*width: 24px;
+            height: 24px;
+            border-radius: 50%;*/
+            display: inline-block;
+            margin-right: 0.5rem;
+            /*background-size: cover;
+            background-position: center;*/
+        }
+
+
+        .category-count {
+            margin-left: auto;
+            color: #fa9827;
+            font-size: 0.9rem;
+        }
+
+				.form-check-input {
+					border: 1px solid grey !important;
+					/*margin-top: 1px;*/ /* Regolazione per allineare meglio la checkbox */
+				}
+
+
+				hr {
+					margin-top: 40px!important;
+					margin-bottom: 40px!important;
+				}
+
+
+				/* Stile per il contenitore della barra (il "binario") */
+.noUi-target {
+  background: #e0e0e0 !important; /* Esempio: un grigio chiaro come sfondo */
+  border: 0px solid #bdbdbd !important; /* Esempio: un bordo sottile grigio */
+  border-radius: 5px !important; /* Opzionale: per angoli arrotondati */
+  height: 5px !important; /* Imposta l'altezza desiderata della barra */
+}
+
+/* Stile per la barra di connessione (la parte tra gli handle) */
+.noUi-connect {
+  background: #fd7e14 !important; /* Esempio: un blu primario come colore di connessione */
+  border: none !important; /* Rimuovi il bordo predefinito della connessione */
+  border-radius: 5px !important; /* Opzionale: per angoli arrotondati (uguali al target per continuità) */
+}
+
+/* Stile per gli handle (i cursori laterali) - questo è un esempio base */
+.noUi-handle {
+  background: #fd7e14 !important; /* Sfondo bianco per l'handle */
+  border: 0px solid #ccc !important; /* Bordo grigio per l'handle */
+  border-radius: 50% !important; /* Per renderli rotondi */
+  width: 20px !important; /* Larghezza dell'handle */
+  height: 20px !important; /* Altezza dell'handle */
+  top: -8px !important; /* Posiziona l'handle in modo che sia centrato sulla barra */
+  /* Altri stili come ombra, ecc. */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Rimuovi l'ombra predefinita al focus (opzionale) */
+.noUi-handle:focus {
+  outline: none !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important; /* Mantieni o personalizza l'ombra al focus */
+}
+
+/* Stile per l'handle quando è attivo (trascinato) - opzionale */
+.noUi-handle:active {
+  background: #f8f9fa !important; /* Un grigio molto chiaro all'attivazione */
+  border-color: #6c757d !important; /* Bordo leggermente più scuro all'attivazione */
+}
+
+
+.noUi-target .noUi-handle:before,
+.noUi-target .noUi-handle:after {
+  display: none;
+}
+
+
+
+
+
+
+				.form-check-label {
+					color: #888383;
+				}
+
+
+		/*inizio funzione switch*/
+		/*.sezione-variabile {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }*/
+
+				.opzione-contenuto-b {
+					width: 80px;
+				}
+
+				.opzione-contenuto-a,
+        .opzione-contenuto-b {
+            display: none; /* Nascondi tutti i contenuti inizialmente */
+        }
+
+        .opzione-contenuto-a.active {
+						display: block;
+				}
+
+        .opzione-contenuto-b.active {
+            display: inline-block; /* Mostra il contenuto attivo */
+        }
+		/*fine funzione switch*/
+
+
+		/*inizio stile switch*/
+		label img {
+			cursor: pointer;
+		}
+
+		.elementi-in-linea {
+			display: inline-block;
+		}
+
+		/* Cambia i colori predefiniti */
+	.btn-outline-secondary {
+	  background-color: #faf9f8;/*#faf9f8*/ /* Sostituisci con il tuo colore del testo predefinito */
+	  border: 0; /* Sostituisci con il tuo colore del bordo predefinito */
+		height: 32px !important;
+	}
+
+	/* Cambia i colori al passaggio del mouse (hover) */
+	.btn-outline-secondary:hover {
+	  /*color: #your-hover-text-color;*/ /* Sostituisci con il tuo colore del testo al hover */
+	  background-color: #faf9f8 !important; /* Sostituisci con il tuo colore di sfondo al hover */
+	  /*border-color: #your-hover-border-color;*/ /* Sostituisci con il tuo colore del bordo al hover */
+	}
+
+
+
+	/*personalizzazioni pulsante attivo*/
+	.btn-group > input:checked + label.btn-outline-secondary,
+	.btn-group > .btn-check:checked + .btn-outline-secondary {
+	  background-color: #faf9f8 !important; /* Cambia questo con il colore attivo desiderato */
+	  color: white !important; /* Cambia questo con il colore del testo attivo desiderato */
+	  border-color: blue !important; /* Cambia questo con il colore del bordo attivo desiderato */
+	}
+
+	/* Stile opzionale per il focus sullo stato attivo */
+	.btn-group > input:checked + label.btn-outline-secondary:focus,
+	.btn-group > .btn-check:checked + .btn-outline-secondary:focus,
+	.btn-group > input:checked + label.btn-outline-secondary.focus,
+	.btn-group > .btn-check:checked + .btn-outline-secondary.focus {
+	  box-shadow: 0 0 0 0.25rem rgba(0, 0, 255, 0.5) !important; /* Cambia il colore dell'ombra del focus attivo */
+	}
+
+
+		/* Nascondi l'immagine predefinita quando il bottone è attivo */
+	.btn-group > input:checked + label.btn-outline-secondary img {
+	  opacity: 0;
+	  /*transition: opacity 0.2s ease-in-out;*/
+	}
+
+	/* Stile specifico per il primo bottone attivo */
+.btn-group > input#option1-desktop:checked + label[for="option1-desktop"],
+.btn-group > input#option1-mobile:checked + label[for="option1-mobile"] {
+  background-image: url('ufficiale/filtro-risultati-attivo.svg'); /* Sostituisci con l'icona bianca dell'utente */
+  background-repeat: no-repeat;
+  background-position: 3px center;
+	/*background-position: center;*/
+  /*background-size: auto 85%;*/
+}
+
+/* Stile specifico per il secondo bottone attivo */
+.btn-group > input#option2-desktop:checked + label[for="option2-desktop"],
+.btn-group > input#option2-mobile:checked + label[for="option2-mobile"] {
+  background-image: url('ufficiale/filtro-risultati-attivo-borsa-spesa.svg'); /* Sostituisci con l'icona bianca della borsa */
+  background-repeat: no-repeat;
+  background-position: center;
+  /*background-size: auto 85%;*/
+}
+
+/* Stile specifico per il terzo bottone attivo */
+.btn-group > input#option3-desktop:checked + label[for="option3-desktop"],
+.btn-group > input#option3-mobile:checked + label[for="option3-mobile"] {
+  background-image: url('ufficiale/filtro-risultati-attivo-negozio.svg'); /* Sostituisci con l'icona bianca del negozio */
+  background-repeat: no-repeat;
+	background-position: 0px center;
+	/*background-position: center;*/
+  /*background-size: auto 85%;*/
+}
+
+		/*fine stile switch*/
+
+
+
+
+
+
+/***********************28-03-25 fine pagina shop********************************/
+
+
+
+
+/*************************16-04-25 inizio popup carrello*************************/
+.modal-content {
+	position: relative;
+  display: flex;
+  flex-direction: column;
+  /*width: 100%;*/
+  pointer-events: auto;
+
+	/*inizio sfondo*/
+	width:100%;
+
+	/*ho usato una classe a parte per questi due stili di background*/
+	/*background: url("ufficiale/background-menu-btn-2-1-grigio.svg") right top repeat;
+	background-color: white !important;
+	background-size: 100% auto;*/
+
+	/*fine sfondo*/
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0px !important;
+  outline: 0;
+}
+
+.contenuto-modale {
+	background: url("ufficiale/background-menu-btn-2-1-grigio.svg") right top repeat;
+	background-size: 100% auto;
+	background-color: white !important;
+}
+
+.modal-header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between; /* Spazio tra titolo e pulsante di chiusura */
+  padding: 23px 30px !important;
+  border-bottom: 0px solid #dee2e6 !important;
+  border-top-left-radius: 0.3rem; /* Arrotondamento angolo superiore sinistro */
+  border-top-right-radius: 0.3rem; /* Arrotondamento angolo superiore destro */
+}
+
+.modal-body {
+  position: relative;
+  padding: 0px !important;
+  flex-grow: 1; /* Permette al body di espandersi */
+}
+
+.modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  align-items: center;
+  /*justify-content: flex-end;*/ /* Allinea i bottoni a destra */
+  padding: 12px 28px !important;
+  /*background-color: #f8f9fa;*/
+  border-top: 0px solid #dee2e6 !important;
+  border-bottom-right-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 600px !important; /* Larghezza massima predefinita per schermi medi e superiori */
+    margin: 1.75rem auto; /* Margini superiore/inferiore e centraggio orizzontale */
+  }
+}
+
+.cart-item {
+		display: flex;
+		align-items: center;
+		padding: 30px 30px !important;
+}
+
+.cart-item:last-child {
+		border-bottom: none;
+}
+
+.bordo-centrato {
+  /* Assicurati che l'elemento genitore abbia position: relative; se vuoi posizionare
+     il bordo in modo assoluto rispetto ad esso. Altrimenti, il posizionamento
+     sarà rispetto al viewport o all'antenato posizionato più vicino. */
+  position: relative;
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+}
+
+.bordo-centrato::after {
+  content: "";
+  position: absolute;
+  left: 50%; /* Inizia il bordo al centro */
+  bottom: 0;
+  width: 90%;
+  height: 0; /* Assicurati che l'altezza sia 0 per visualizzare solo il bordo */
+  border-bottom: 2px solid #e8e8e8; /* Imposta il colore e lo spessore del bordo */
+  transform: translateX(-50%); /* Centra orizzontalmente il bordo */
+}
+
+.item-image {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		/*margin-right: 25px !important;*/
+}
+
+.item-details, .item-price, .item-quantity, .item-price-carrello {
+		flex-grow: 1;
+}
+
+.item-name {
+		font-weight: bold;
+		/*margin-bottom: 3px !important;*/
+}
+
+.item-delivery {
+		font-size: 0.9em;
+		color: #6c757d;
+}
+
+.item-quantity {
+		display: flex;
+		align-items: center;
+		justify-content: center; /* Aggiungi questa linea */
+		margin-left: auto;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+	/*height: 45px;*/
+	background-color: #ffffff;
+}
+
+.quantity-button {
+		/*border: 1px solid #ccc;*/
+		border: none;
+		background-color: transparent;
+		padding: 5px 8px;
+		cursor: pointer;
+		font-size: 0.9em;
+}
+
+.quantity-input, .quantity-input-mobile, .check-quantity-input-checkout-mobile {
+		width: 30px;
+		text-align: center;
+		margin: 0 5px;
+		border: none;
+		font-size: 0.9em;
+}
+
+.item-price-carrello {
+	font-weight: bold;
+	text-align: right;
+}
+
+.item-price {
+	font-weight: bold;
+	text-align: right;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.summary {
+		padding: 20px 30px;
+		text-align: right;
+}
+
+.summary-row {
+		display: flex;
+
+
+		justify-content: space-between;
+		margin-bottom: 8px;
+}
+
+.summary-row:last-child {
+		font-weight: bold;
+		font-size: 1.1em;
+}
+
+
+/*************************16-04-25 fine popup carrello*************************/
+
+
+
+
+/*************************17-04-25 inizio carrello*************************/
+
+
+
+
+
+.item-quantity-carrello {
+		display: flex;
+		align-items: center;
+		justify-content: center; /* Aggiungi questa linea */
+		margin-left: auto;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+}
+
+.input-promo {
+	height: 50px;
+	border-radius: 0px !important;
+}
+
+.btn-promo {
+	background-color: #F87537 !important;
+	border: 0;
+	color: #ffffff !important;
+	font-weight: bold !important;
+	padding: 8px 30px 0px 30px !important;
+}
+
+.btn-promo:hover {
+	background-color: #F87537;
+	color: #ffffff;
+}
+
+.margin-promo {
+	margin-top: 43px;
+}
+
+
+.sfondo-cane-nero-aggiungi {
+
+			/*padding-top: 50px;*/
+			padding-bottom: 50px;
+
+
+			/*bottom:0;
+			left:0;*/
+
+			background: url("ufficiale/impronte-prodotto-bundle.svg");
+			background-repeat: no-repeat;
+			background-size: 88%;
+			/*background-position: 90% -51px;*/
+		}
+
+
+.background-aggiungi {
+	padding-top: 50px;
+	/*padding-bottom: 10px;*/
+	margin-top: 50px;
+	margin-bottom: 100px;
+
+	bottom:0;
+	left:0;
+	width:100%;
+
+	background: url("ufficiale/background-menu-btn-2-1.svg") right top repeat;
+
+	background-size: 50% auto;
+
+	background-color: #faf9f8;
+
+}
+
+
+.bone-product-wrapper {
+    position: relative; /* Fondamentale: imposta il contesto per il posizionamento assoluto */
+    /* Potresti voler aggiungere overflow: hidden; qui se le impronte si estendono oltre questo div e non vuoi che siano visibili */
+}
+
+.bone-product-wrapper .paw-print-sx {
+    position: absolute;
+    /* Usa percentuali per il posizionamento, si adatteranno con il contenitore */
+    top: -15%; /* Regola secondo necessità per la posizione verticale */
+    left: -5%;  /* Regola secondo necessità per la posizione orizzontale */
+    z-index: 1;
+    /* Assicurati che l'immagine stessa sia reattiva */
+    max-width: 30%; /* Esempio: l'impronta occupa il 30% della larghezza del contenitore */
+    height: auto;
+}
+
+.bone-product-wrapper .paw-print-dx {
+    position: absolute;
+    /* Usa percentuali per il posizionamento */
+    top: 95%; /* Regola secondo necessità */
+    left: 85%; /* Regola secondo necessità */
+    z-index: 1;
+    /* Assicurati che l'immagine stessa sia reattiva */
+    max-width: 30%; /* Esempio: l'impronta occupa il 30% della larghezza del contenitore */
+    height: auto;
+}
+
+.bone-product-wrapper .paw-print-sx2 {
+    position: absolute;
+    /* Usa percentuali per il posizionamento, si adatteranno con il contenitore */
+    top: -15%; /* Regola secondo necessità per la posizione verticale */
+    left: 85%;  /* Regola secondo necessità per la posizione orizzontale */
+    z-index: 1;
+    /* Assicurati che l'immagine stessa sia reattiva */
+    max-width: 30%; /* Esempio: l'impronta occupa il 30% della larghezza del contenitore */
+    height: auto;
+}
+
+.bone-product-wrapper .paw-print-dx2 {
+    position: absolute;
+    /* Usa percentuali per il posizionamento */
+    top: 95%; /* Regola secondo necessità */
+    left: -5%; /* Regola secondo necessità */
+    z-index: 1;
+    /* Assicurati che l'immagine stessa sia reattiva */
+    max-width: 30%; /* Esempio: l'impronta occupa il 30% della larghezza del contenitore */
+    height: auto;
+}
+
+
+/*************************17-04-25 fine carrello*************************/
+
+
+
+/*************************29-04-25 inizio prodotto singolo annuncio frame********************/
+.background-bundle {
+	padding-top: 50px;
+	/*padding-bottom: 10px;*/
+	margin-top: 100px!important;
+	margin-bottom: 100px!important;
+
+	bottom:0;
+	left:0;
+	width:100%;
+
+	background: url("ufficiale/background-menu-btn-2-1.svg") right top repeat;
+
+	background-size: 50% auto;
+
+	background-color: #faf9f8;
+
+}
+
+.conteggio-numero {
+		display: flex;
+		align-items: center;
+		justify-content: center; /* Aggiungi questa linea */
+		margin-left: auto;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		height: 40px;
+		width: 130px;
+		background-color: #ffffff;
+}
+
+
+		.col-md-6-img { /* Assicurati che questo selettore abbia la precedenza o usa un selettore più specifico se necessario */
+		  position: relative; /* Rende il div il contenitore di riferimento per il posizionamento assoluto */
+		}
+
+		.immagine-sfondo {
+		  position: absolute;
+		  z-index: -1; /* Mantiene le immagini di sfondo dietro al contenuto */
+		}
+
+		.immagine-sfondo-alto {
+		  top: -30px;
+		  left: 67%;
+		  transform: translateX(-50%);
+		  max-width: 80%; /* Regola la larghezza dell'immagine superiore se necessario */
+		  height: auto;
+		}
+
+		.immagine-sfondo-basso-destra {
+		  bottom: 130px;
+		  right: -55px;
+		  max-width: 50%; /* Regola la larghezza dell'immagine inferiore se necessario */
+		  height: auto;
+		}
+
+		.immagine-sfondo img {
+		  display: block; /* Rimuove lo spazio extra sotto le immagini inline */
+		  width: 100%; /* L'immagine si adatta alla larghezza del suo contenitore immagine-sfondo */
+		  height: auto;
+		}
+
+		.sfondo-crocchette-bundle {
+
+			/*padding-top: 50px;*/
+			padding-bottom: 50px!important;
+
+
+			/*bottom:0;
+			left:0;*/
+
+			background: url("ufficiale/impronte-prodotto-bundle.svg");
+			background-repeat: no-repeat;
+			background-size: 430px;
+			background-position: 17% -68px;
+		}
+
+		/* inizio galleria tablet */		
+		/* Stili per la galleria orizzontale */
+		.gallery-tablet {
+			display: flex;
+			align-items: flex-start;
+			gap: 1rem;
+			overflow-x: auto; /* Abilita lo scorrimento orizzontale */
+			-webkit-overflow-scrolling: touch; /* Migliora lo scorrimento su iOS */
+			white-space: nowrap; /* Impedisce alle immagini di andare a capo */
+		}
+
+		/* Nasconde la barra di scorrimento (per un look più pulito) */
+		.gallery-tablet::-webkit-scrollbar {
+			display: none;
+		}
+
+		.gallery-tablet {
+			-ms-overflow-style: none;
+			scrollbar-width: none;
+		}
+
+		/* Stili per i contenitori delle singole immagini */
+		.img-box {
+			flex-shrink: 0; /* Impedisce alle immagini di rimpicciolirsi */
+		}
+
+		/* Stili per le singole immagini */
+		.img-uniform {
+			height: 182px; /* Dimensione base su desktop */
+			width: auto;
+			object-fit: contain;
+		}    
+		/*fine galleria tablet*/
+
+
+/*************************29-04-25 fine prodotto singolo annuncio frame********************/
+
+
+/***************15-05-25 inizio prodotto singolo prodotto frame****************************/
+.check-quantity-input, .check-quantity-input-mobile {
+		width: 30px;
+		text-align: center;
+		margin: 0 5px;
+		border: none !important;
+		font-size: 0.9em;
+}
+
+/***************15-05-25 fine prodotto singolo prodotto frame****************************/
+
+
+/***************19-05-25 inizio checkout****************************/
+		.payment-method {
+            /*border: 1px solid #ccc;*/
+            /*padding: 25px;*/
+            margin-bottom: 15px;
+            /*border-radius: 5px;*/
+						background-color: #ffffff;
+        }
+
+        .payment-method label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+
+
+		.sfondo-checkout {
+
+
+
+			/* Il gradiente è sopra l'immagine */
+    background: url("ufficiale/background-menu-btn-2-1-grigio.svg") left top no-repeat,
+		linear-gradient(to right, #faf9f8 100%);
+
+    background-size: auto 100%, auto; /* Assicurati di impostare le dimensioni per entrambi gli sfondi */
+    /* Il primo valore di background-size è per lo sfondo, il secondo per il gradiente.
+       'auto' per l'immagine significa che userà la sua dimensione originale. */
+}
+
+		.colore-checkout {
+			/*background-color: #faf9f8;*/
+			background: linear-gradient(to right, #faf9f8 63%, #ffffff 37%);
+		}
+
+
+		/*.invisibile50 {
+  clip-path: polygon(46.5% 0, 100% 0%, 100% 100%, 46.5% 100%);
+}*/
+
+
+
+
+		input[type="checkbox"]:checked {
+			background-color: #f87537!important; /* Cambia il colore dell'indicatore */
+		  border-color: #f87537!important;    /* Cambia il colore del bordo quando selezionato */
+		}
+
+
+		input[type="radio"]:checked {
+		  background-color: #1a1a1a;
+		  border-color: #1a1a1a;
+		}
+
+
+/***************19-05-25 fine checkout****************************/
+
+
+/***************26-05-25 inizio accedi****************************/
+.edit-switch-ricorda {
+		height: 25px!important;
+		width: 45px!important;
+    /*padding-top: 16px;
+    padding-bottom: 16px;*/
+		background-color: #f2f2f2!important;
+}
+
+				.hr-with-text {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #888; /* Colore del testo */
+            margin: 20px 0; /* Spaziatura sopra e sotto */
+        }
+
+        .hr-with-text::before,
+        .hr-with-text::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background-color: #ccc; /* Colore della linea */
+            margin: 0 10px; /* Spazio tra linea e testo */
+        }
+
+        .hr-with-text span {
+            padding: 0 10px; /* Spazio intorno al testo */
+            white-space: nowrap; /* Impedisce al testo di andare a capo */
+        }
+
+				.image-placeholder {
+            position: absolute;
+            /*top: 50%;*/
+						/*top: 600px;*/
+            left: 29%; /* Regola la posizione orizzontale */
+
+            pointer-events: none; /* Permette di interagire con l'input sottostante */
+        }
+
+				.sfondo-sx {
+					background: url("ufficiale/background-menu-btn-2-2-grigio.svg") left top no-repeat;
+					background-size: auto 120%;
+					height: 100%;
+				}
+
+
+/***************26-05-25 fine accedi****************************/
+
+/***************29-05-25 inizio profilo utente****************************/
+
+
+
+
+
+
+#content-profilo-utente > div {
+		display: none;
+}
+
+#content-profilo-utente > div.active {
+		display: block;
+}
+
+
+.input-with-inner-asterisk .inner-asterisk {
+            position: absolute;
+            top: 33%;
+            right: 10px; /* Distanza dal bordo destro dell'input */
+            transform: translateY(-50%); /* Centra verticalmente */
+            color: var(--bs-danger); /* Colore rosso di Bootstrap */
+            font-size: 1.2em; /* Dimensione dell'asterisco */
+            pointer-events: none; /* Rende l'asterisco non cliccabile/interferente */
+            z-index: 2; /* Assicura che sia sopra l'input */
+        }
+
+.input-with-inner-asterisk {
+            position: relative; /* Contenitore per posizionamento assoluto */
+        }
+
+/* Se vuoi che l'asterisco appaia solo quando il campo è vuoto e non in focus */
+        .input-with-inner-asterisk .form-control:focus + .inner-asterisk,
+        .input-with-inner-asterisk .form-control:not(:placeholder-shown) + .inner-asterisk {
+            display: none; /* Nasconde l'asterisco quando si digita o il campo ha un valore */
+        }
+
+
+.icona-modifica {
+            position: absolute;
+            top: 10%;
+            right: 10px; /* Distanza dal bordo destro */
+            transform: translateY(-50%); /* Centra verticalmente */
+            font-size: 1.2em; /* Dimensione */
+        }
+
+
+/* Stile per la voce di menu "utente" QUANDO è attiva */
+.menu-utente-attivo.current-menu-item::after {
+    	content: '';
+	    position: absolute;
+	    width: 22%; /* Larghezza della sottolineatura */
+	    height: 3px; /* Spessore della sottolineatura */
+	    background-color: #fa9827; /* Colore della sottolineatura */
+	    bottom: 0;
+		right: 12px;
+	    left: auto;
+	    transform: none;
+}
+
+.menu-utente-attivo.current-menu-item {
+	 position: relative;
+}
+
+
+/* Stile per la voce di menu "carrello" QUANDO è attiva */
+.modale-carrello.current-menu-item::after {
+    	content: '';
+	    position: absolute;
+	    width: 27%!important; /* Larghezza della sottolineatura */
+	    height: 3px; /* Spessore della sottolineatura */
+	    background-color: #fa9827; /* Colore della sottolineatura */
+	    bottom: 0;
+		right: 12px;
+	    left: auto;
+	    transform: none;
+}
+
+.modale-carrello.current-menu-item {
+	 position: relative;
+}
+
+/* Potresti voler sovrascrivere lo stile hover per questa voce specifica */
+/*.menu-utente-attivo.current-menu-item a:hover {
+    color: #005f5f !important;
+    background-color: #d1f5f5;
+    border-color: #005f5f;
+}*/
+
+/* Stile GENERICO per TUTTE le altre voci di menu attive (se lo desideri) */
+/* Questo stile si applicherà a .current-menu-item purché non sia anche .speciale-attiva */
+/*.current-menu-item:not(.menu-utente-attivo) a {
+    color: #cc0000; /* Rosso standard */
+    /*font-style: italic;
+    /* Puoi aggiungere altri stili per le altre voci attive */
+/*}*/
+
+
+
+/***************29-05-25 fine profilo utente****************************/
+
+
+
+
+/*ex nav-item*/
+.menu-item-11309, .menu-item-11310 {
+	border-left-style: solid;
+	border-left-width: thin;
+	border-left-color: #f0f0f0;
+	z-index: 0;
+	/*allarga nav-item*/
+	padding-left: 18px !important;
+	padding-right: 18px !important;
+}
+
+.menu-item-11333 {
+	border-left-style: solid;
+	border-left-width: thin;
+	border-left-color: #f0f0f0;
+	z-index: 0;
+	/*allarga nav-item*/
+	padding-left: 18px !important;
+}
+
+
+.menu-item-11302, .bordo-rilevanza {
+	border-left-style: solid;
+	border-left-width: thin;
+	border-left-color: #f0f0f0;
+	z-index: 0;
+}
+
+
+.menu-item-11292, .menu-item-11302 {
+	padding-left: 12px !important;
+	padding-right: 12px !important;
+}
+
+
+
+.dropdown {
+	border-left-style: none;
+	z-index: 1;
+}
+
+
+.margine-standard {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+
+
+.acapo {
+	word-wrap: break-word;
+}
+
+
+
+.img-thumbnail {
+	width: 100%;
+	height: auto;
+	margin: 0 0 20px 0;
+	border: 0 !important;
+	padding: 0 !important;
+}
+
+
+.primary {
+  color: #f87537;
+	margin-bottom: 10px;
+}
+
+.btn-light {
+	background-color: #FBECE4 !important;
+	border: 0 !important;
+	color: #862B00 !important;
+	font-weight: bold !important;
+	padding: 11px 50px 11px 50px !important;
+}
+
+.btn-light:hover {
+	background-color: #FBECE4 !important;
+	color: #862B00 !important;
+}
+
+.btn-warning {
+	background-color: #F87537 !important;
+
+	border: 0 !important;
+	color: #ffffff !important;
+	font-weight: bold !important;
+	padding: 11px 50px 11px 50px !important;
+}
+
+.btn-warning:hover {
+	background-color: #F87537 !important;
+	color: #ffffff !important;
+}
+
+.servizi {
+	margin-bottom: 20px;
+}
+
+
+
+
+.spazio-standard {
+	padding: 40px 0 40px 0;
+}
+
+footer {
+	margin-top: 100px;
+	bottom:0;
+	left:0;
+	width:100%;
+	padding: 50px 0 0px 0;
+
+
+	background: url("ufficiale/background-menu-btn-2-1.svg") right top repeat;
+
+	background-size: 35% auto;
+
+}
+
+.footer-color {
+	background-color: #faf9f8;
+}
+
+
+
+
+
+.sfondo-falco {
+	background-color: #faf9f8;
+	/*background-color: #000000;*/ /*classe di test*/
+}
+
+
+.falco {
+
+
+	background: url('ufficiale/petbuy-falco-1.svg') right bottom no-repeat,
+	            url('ufficiale/Shape.svg') right bottom no-repeat,
+	            url('ufficiale/impronte-riga-falco.svg') 30% top no-repeat,
+	            linear-gradient(110deg, #faf9f8 60%, transparent 40%),
+	            url("ufficiale/background-menu-btn-2-1.svg") right top no-repeat;
+
+		background-size: auto, auto, auto 100%, 100% auto, 50% auto;
+		background-position: right bottom, right bottom, 30% top, left top, right top;
+		z-index: auto, auto, 0, auto, 10; /* Assicurati che il linear-gradient abbia uno z-index maggiore */
+
+
+	background-color: #ffffff;
+
+	padding-top: 70px;
+	padding-bottom: 70px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	height: 500px;
+}
+
+
+
+
+
+/*.navbar-brand {
+	margin-bottom: 0;
+	padding-bottom: 0;
+}*/
+
+nav .navbar-nav li a{
+  color: #000000 !important;
+  }
+
+
+	/*ex .nav-link.active*/
+	.current-menu-item:not(.menu-utente-attivo) {
+	    position: relative;
+	}
+
+	/*.nav-link.active::after*/
+	.current-menu-item:not(.menu-utente-attivo)::after {
+	    content: '';
+	    position: absolute;
+	    width: 20%; /* Larghezza della sottolineatura */
+	    height: 3px; /* Spessore della sottolineatura */
+	    background-color: #fa9827; /* Colore della sottolineatura */
+	    bottom: 0;
+	    left: 50%;
+	    transform: translateX(-50%);
+	}
+
+.phone {
+	text-align: right;
+}
+
+
+
+
+.topbar {
+	padding: 10px 0px 10px 0px;
+}
+
+.container-galleria {
+
+	padding-top: 50px;
+	padding-bottom: 50px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+
+	background: url("ufficiale/background-menu-btn-2-1.svg") left top no-repeat, url("ufficiale/impronte-galleria.svg") right bottom no-repeat;
+
+	background-size: 50% auto, auto 100%;
+}
+
+
+
+.colore-sfondo-galleria {
+	background-color:#faf9f8;
+}
+
+
+.sfondo-galleria {
+
+}
+
+
+.edit-form-header {
+		height: 50px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+		border: 0 !important;
+}
+
+
+#lente {
+    position: relative;
+    z-index: 1;
+    left: -35px;
+    top: 15px;
+    color: #7B7B7B;
+    cursor:pointer;
+    width: 0;
+}
+
+
+
+
+
+.fixed-top {
+	background-color: #ffffff;
+}
+
+
+body.margine footer {
+    /* I tuoi stili CSS specifici per il footer su quella pagina */
+    margin: 0!important;
+}
+
+
+@media screen and (min-width: 601px) {
+	
+	/*aggiunge un padding specifico solo all'ultima voce del menu desktop*/
+	.menu-item:last-child a {
+	    padding-right: 5px!important;
+	    /*padding-left: 20px;*/
+		/*background-color: aqua!important;*/
+	}
+
+	/*inizio home desktop*/
+	.servizi-spazio {
+		padding: 40px 0 100px 0;
+	}
+
+	/*ex main*/
+	.sezione-cane {
+		background-color:#faf9f8;
+
+
+
+		background-image: url('ufficiale/logo-mobile.svg'), url('ufficiale/cerchio-alternativo.svg'), url('ufficiale/impronte-cta1.svg');
+		background-position: right bottom, right bottom, 20% bottom;
+		background-repeat: no-repeat, no-repeat, no-repeat;
+		background-size: auto auto, auto auto, auto 105%;
+
+		padding-top: 130px;
+		padding-bottom: 70px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		height: 600px;
+	}
+
+	.h1principale {
+		/**/
+		font-weight: bold !important;
+		font-size: 60px!important;
+	}
+
+	h1 {
+		font-weight: bold!important;
+	}
+	/*fine home desktop*/
+
+	/*inizio shop desktop*/
+	.sidebar-col {
+		padding: 25px!important;
+	}
+
+	.gallery-shop {
+    display: flex; /* Assicura che sia un contenitore flex */
+    /* Rimuovi justify-content: space-between; se vuoi che siano vicine e allineate a sinistra */
+    justify-content: flex-start; /* Allinea le immagini all'inizio (sinistra) */
+    align-items: center; /* Centra verticalmente le immagini se avessero altezze diverse */
+    gap: 0.35rem; /* Spazio tra le immagini */
+    overflow-x: auto; /* Mantiene lo scorrimento orizzontale */
+    /* Aggiungi queste per migliorare l'esperienza di scorrimento su alcuni browser */
+    /*-webkit-overflow-scrolling: touch;*/ /* Per iOS Safari */
+    /*scrollbar-width: none;*/ /* Nasconde la scrollbar per Firefox */
+    /*-ms-overflow-style: none;*/  /* Nasconde la scrollbar per IE/Edge */
+}
+
+/* Nasconde la scrollbar per Chrome, Safari e Opera */
+/*.gallery-shop::-webkit-scrollbar {
+    display: none;
+}*/
+
+.img-box-shop {
+    /* Rimuovi flex: 1; */
+    /* Lascia display: flex; e justify-content: center; solo se vuoi centrare l'immagine all'interno di OGNI singola img-box-shop (utile se img-box-shop ha una larghezza fissa) */
+    flex-shrink: 0; /* Impedisce che le immagini si rimpiccioliscano troppo */
+    padding: 0 5px; /* Aggiungi un piccolo padding orizzontale, se non usi gap */
+    /* width: auto; Potrebbe essere utile se vuoi che img-box-shop non si espanda */
+}
+
+.img-uniform-shop {
+    height: 31px; /* Mantiene l'altezza fissa */
+    width: auto; /* La larghezza si adatta per mantenere le proporzioni */
+    object-fit: contain;
+    /*border: 2px solid #ccc;*/
+}
+	/*fine shop desktop*/
+
+	/*inizio prodotto singolo annuncio frame*/
+	.p-zero {
+		padding: 0!important;
+	}
+
+	.img-uniform {
+		height: 100px;
+	}
+
+
+
+	/*fine prodotto singolo annuncio frame*/
+
+
+	/*inizio carrello popup*/
+	.item-image {
+			margin-right: 25px !important;
+	}
+	/*fine carrello popup*/
+
+
+	/*inizio checkout*/
+	.tra-menu-e-titolo {
+		margin-top: 100px;
+	}
+
+	.carte {
+		padding:0px 35px 0px 35px!important;
+	}
+
+	.carte-spunta {
+		padding:0px 10px 0px 48px!important;
+	}
+
+	div.sfondino {
+		padding-left: 45px;
+	}
+
+	.spazi-checkout {
+		padding-top: 48px;
+		margin-top: 48px;
+	}
+	/*fine checkout*/
+
+
+	/*inizio profilo utente*/
+
+	.spazi-form {
+		padding-left: 60px!important;
+		padding-right: 70px !important;
+	}
+
+	.pr-cont-prof {
+		padding-right: 3rem !important;
+	}
+
+	body.sfondo-profilo-utente {
+		background: url("ufficiale/background-menu-btn-2-2-grigio.svg") right top no-repeat;
+		background-size: 79.5% auto;
+		height: 100%;
+	}
+
+	/*fine profilo utente*/
+
+
+	/*inizio accedi*/
+		.ilform {
+			padding-left:38px;
+			padding-right:73px;
+		}
+
+		.impronta1-arancio-accedi {
+			position: absolute;
+			bottom: 355px;
+			left: -60px;
+			z-index: 1;
+		}
+
+		.impronta2-arancio-accedi {
+			position: absolute;
+			bottom: 326px;
+			left: -66px;
+			z-index: 1;
+		}
+
+		.impronta-grande-dx-accedi {
+			position: absolute;
+			bottom: 250px;
+			right: 30px;
+			z-index: 1;
+		}
+
+		.impronta-piccola-dx-accedi {
+			position: absolute;
+			bottom: 345px;
+			right: 90px;
+			z-index: 1;
+		}
+
+		.impronta-grande-vicino-cane-dx-accedi {
+			position: absolute;
+			bottom: 292px;
+			right: 210px;
+			z-index: 1;
+		}
+
+		.impronta-piccola-vicino-cane-dx-accedi {
+			position: absolute;
+			bottom: 268px;
+			right: 233px;
+			z-index: 1;
+		}
+
+
+		.impronta-grande-in-alto-a-sx-accedi {
+			position: absolute;
+			bottom: 190px;
+			left: 40px;
+			z-index: 1;
+		}
+
+		.impronta-piccola-in-alto-a-sx-accedi {
+			position: absolute;
+			bottom: 248px;
+			left: 24px;
+			z-index: 1;
+		}
+
+		.impronta-grande-in-basso-a-sx-accedi {
+			position: absolute;
+			bottom: 85px;
+			left: -38px;
+			z-index: 1;
+		}
+
+		.impronta-piccola-in-basso-a-sx-accedi {
+			position: absolute;
+			bottom: 90px;
+			left: 30px;
+			z-index: 1;
+		}
+
+	/*fine accedi*/
+
+
+	/*inzio profilo utente*/
+
+	.menu-item-profilo-utente {
+			display: flex;
+			align-items: center;
+			/*padding: 0.75rem 1rem;*/
+			cursor: pointer;
+			text-decoration: none;
+			color: #495057!important;
+			border-right: 4px solid transparent; /* Bordo destro trasparente di default */
+	}
+
+	.menu-item-profilo-utente img {
+			width: 24px;
+			height: auto;
+			margin-right: 0.75rem;
+	}
+
+	.menu-item-profilo-utente.active {
+			color: #fd7e14 !important;
+			font-weight: bold;
+			border-right-color: #fd7e14; /* Bordo destro arancione per la voce attiva */
+	}
+
+	/*fine profilo utente*/
+
+
+	/*inizio carrello*/
+
+	.sfondo-cane-nero-aggiungi {
+				background-position: 90% -51px;
+			}
+
+	/*fine carrello*/
+
+
+	/*inizio profilo venditore*/
+
+	.gradient-text-from-image {
+		background-image: linear-gradient(to right, #f87537 0%, #f87537 50%, #000000 99%, #000000 100%);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent; /* Rende il testo trasparente per mostrare il gradiente */
+	}
+
+	/* Per aggiungere un leggero effetto ombra*/
+	.gradient-text-from-image {
+		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+	}
+
+
+	.cane-profilo-venditore {
+			background-color: #fef1eb!important;
+
+
+
+			background: url("ufficiale/cane-profilo-venditore.svg") right bottom no-repeat,
+			url("ufficiale/background-menu-btn-2-2-profilo-venditore.svg") right top repeat;
+
+			background-size: auto 100%, auto 100%;
+
+
+	}
+
+
+	.pdn-negozio-venditore {
+		padding: 0 100px;
+	}
+
+	.sopra-salva:hover {
+		color: #6c757d !important;
+		background-color: #f8f9fa !important;
+	}
+
+
+	.sfondo-input-venditore {
+			background-color: #FAF9F8!important;
+
+			background: url("ufficiale/background-menu-btn-2-3-venditore.svg") right top repeat;
+
+			background-size: auto;
+	}
+
+	.padd-form-venditore {
+		padding: 70px 80px;
+	}
+
+	.padd2-form-venditore {
+		padding: 50px 90px;
+	}
+
+	table .cella1 {
+		--bs-text-opacity: 1;
+  	color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;
+		font-weight: normal!important;
+		background-color: transparent!important;
+		padding: 0px 0px 15px 0px!important;
+	}
+
+	table .cella2 {
+		--bs-text-opacity: 1;
+  	color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;
+		font-weight: normal!important;
+
+		padding: 30px 20px 15px 20px!important;
+	}
+
+	table .cella1bis {
+		text-align: center!important;
+		background-color: transparent!important;
+		border: 0px!important;
+		padding-top: 30px!important;
+	}
+
+	table .cella2bis {
+		text-align: center!important;
+
+		border: 0px!important;
+		padding-bottom: 30px!important;
+		padding-top: 30px!important;
+	}
+
+	table th:not(:first-child) {
+		text-align: center!important;
+	}
+
+	/*table th:last-child,
+	table tr td:last-child {
+	  filter: blur(4px);
+	}
+
+	table th:nth-last-child(2),
+	table tr td:nth-last-child(2) {
+	  filter: blur(4px);
+	}*/
+
+	.accordion-item  {
+  /*background-color: var(--bs-accordion-bg);*/
+	background-color: rgb(130,107,255)!important;
+ 	background-color: rgba(130,107,255,0)!important;
+  border: 0!important;
+}
+
+	.accordion-button {
+		background-color: rgb(130,107,255)!important;
+	 	background-color: rgba(130,107,255,0)!important;
+	}
+
+	/* Nascondi la freccia predefinita di Bootstrap */
+	.accordion-button::after {
+	  display: none !important;
+	}
+
+	/* Mostra la tua immagine della freccia */
+	.accordion-button .accordion-arrow {
+	  display: inline-block;
+	  width: 100%; /* Adatta la dimensione come preferisci */
+	  height: auto;
+	  transition: transform 0.2s ease-in-out;
+	}
+
+	/* Ruota la freccia quando l'accordion è aperto */
+	.accordion-button:not(.collapsed) .accordion-arrow {
+	  transform: rotate(90deg);
+	}
+
+	/* Mantiene il colore del testo invariato */
+.accordion-button,
+.accordion-button:not(.collapsed) {
+	/*cioè text-secondary*/
+	--bs-text-opacity: 1;
+  color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;
+}
+
+
+.tabianca {
+	border-collapse: separate;
+	border-spacing: 0;
+	border-radius: 10px;
+	overflow: hidden;
+
+}
+
+.tabianca th:first-child {
+	border-top-left-radius: 10px;
+}
+
+.tabianca th:last-child {
+	border-top-right-radius: 10px;
+}
+
+.tabianca td:first-child {
+	border-bottom-left-radius: 10px;
+}
+
+.tabianca td:last-child {
+	border-bottom-right-radius: 10px;
+}
+
+.chart-container {
+		width: 100%;
+		height: 400px; /* Imposta un'altezza fissa per il canvas */
+}
+
+
+/* Stile per nascondere la freccia di default di Bootstrap */
+.custom-select-arrow {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('ufficiale/freccia-select-grafico.svg') !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.75rem center !important;
+  background-size: 8px auto !important;
+  padding-right: 1.5rem !important;
+}
+
+
+	/*fine profilo venditore*/
+
+
+}/*desktop*/
+
+
+
+@media screen and (max-width: 601px) {
+
+
+
+
+			.bottom-align-elements {
+						display: flex;
+						align-items: flex-end; /* Allinea gli elementi in basso */
+						height: 100%; /* Assicura che il contenitore abbia un'altezza per l'allineamento */
+				}
+
+
+				.logo-container {
+						display: flex;
+						justify-content: center;
+						align-items: flex-end; /* Allinea il logo in basso */
+						height: 100%!important;
+				}
+
+				.right-icons {
+						display: flex;
+						justify-content: flex-end; /* Allinea le icone a destra */
+						align-items: flex-end; /* Allinea gli elementi in basso */
+						height: 100%;
+				}
+
+				/* Rimuove lo sfondo predefinito dell'icona */
+				.navbar-toggler-icon {
+					background-image: none !important;
+					background-color: transparent !important;
+					position: relative; /* Necessario per posizionare le pseudo-linee */
+					display: inline-block;
+					width: 24px!important; /* Larghezza dell'icona */
+					height: 24px!important; /* Altezza dell'icona, adatta se vuoi più spazio tra le linee */
+					vertical-align: middle;
+				}
+
+				/* Stile comune per tutte le linee */
+				.navbar-toggler-icon::before,
+				.navbar-toggler-icon::after,
+				.navbar-toggler-icon .line { /* Aggiunta della classe .line per la linea centrale */
+					content: '';
+					background-color: #333; /* Colore delle linee, puoi cambiarlo */
+					height: 2px; /* Spessore delle linee */
+					width: 100%;
+					position: absolute;
+					left: 0;
+					transition: all 0.3s ease-in-out; /* Animazione per la chiusura/apertura */
+				}
+
+				/* Posizionamento delle linee */
+				.navbar-toggler-icon::before {
+					top: 0; /* Linea superiore */
+				}
+
+				.navbar-toggler-icon::after {
+					bottom: 0; /* Linea inferiore */
+				}
+
+				.navbar-toggler-icon .line {
+					top: 50%!important; /* Linea centrale */
+					transform: translateY(-50%)!important; /* Centra verticalmente la linea centrale */
+				}
+
+				/* Allineamento del bottone hamburger in basso */
+				.bottom-align-elements .navbar-toggler {
+					display: flex;
+					align-items: flex-end; /* Allinea il bottone in basso */
+					height: 100%; /* Assicura che il bottone occupi l'altezza del contenitore */
+				}
+
+				.fa-2x {
+					font-size: 27.5px!important;
+				}
+
+
+				footer {
+					background: url("ufficiale/background-menu-btn-2-1.svg") right top repeat;
+					background-size: auto 100%;
+				}
+
+
+				.menu-utente-attivo.current-menu-item::after {
+				    	display: none;
+				}
+	
+				
+				.modale-carrello.current-menu-item::after {
+				    	display: none;
+				}
+
+				.menu-utente-attivo.current-menu-item {
+					border-bottom: 2px solid #fa9827; /* Spessore 2px, linea rossa */
+					 width: 100%; /* Assicura che la linea si estenda per tutta la larghezza */
+				}
+
+
+				/*ex .nav-link.active*/
+				.current-menu-item:not(.menu-utente-attivo) {
+					border-bottom: 2px solid #fa9827; /* Spessore 2px, linea rossa */
+					 width: 100%; /* Assicura che la linea si estenda per tutta la larghezza */
+				}
+
+				/*.nav-link.active::after*/
+				.current-menu-item:not(.menu-utente-attivo)::after {
+				    display: none;
+				}
+
+
+
+				.custom-logo {
+					width: 129px!important;
+				}
+
+
+				/*ex nav-item*/
+				.menu-item-11309, .menu-item-11310, .menu-item-11333, .menu-item-11302, .menu-item-11292 {
+					border: 0;
+					z-index: 0;
+					padding: 0!important;
+				}
+
+				.menu-item-11309, .menu-item-11310 {
+					display: none;
+				}
+
+
+				/*inizio home mobile*/
+					.sezione-cane {
+
+						background-color:#faf9f8;
+
+						background-image: url('ufficiale/progetto-rimuovi-sfondo-1.svg'), url('ufficiale/vector-mobile.svg'), url('ufficiale/tre-impronte-dx-main-mobile.svg'), url('ufficiale/due-impronte-sx-main-mobile.svg');
+						background-position: right bottom, right bottom, 200px top, 35px 370px;
+						background-size: auto auto, auto auto, auto auto, auto auto;
+
+						background-repeat: no-repeat;
+
+						padding-top: 70px;
+						margin-bottom: 0;
+
+						margin-top: 20px;
+
+						height: 460px;
+
+					}
+
+
+					h1 {
+						font-size: 33px!important;
+						font-weight: bold!important;
+					}
+
+					.desc-mobile {
+						font-size: 13px;
+					}
+
+
+					.spazio-link-img {
+						margin-bottom: 48px;
+					}
+
+					.spazio-link-img-top {
+						margin-top: 48px;
+					}
+
+					.novita-mobile {
+						text-align: left;
+						padding-left: 0px!important;
+					}
+
+
+
+					.scheda-prodotto {
+						box-shadow: inset 0 0 0 1px #ffffff;
+						border-radius: 10px;
+						margin-bottom: 10px;
+					}
+
+
+					.senza-spazi {
+						padding: 0!important;
+					}
+
+
+					.m-b20px {
+						margin-bottom: 60px;
+					}
+
+					/* Colore per gli indicatori inattivi */
+					.carousel-indicators [data-bs-target] {
+					  background-color: #FAEEE7!important; /* Sostituisci con il colore desiderato per gli inattivi */
+					  /*opacity: 0.5;*/ /* Puoi anche regolare l'opacità */
+
+						/* --- Aggiungi questo per distanziare gli indicatori --- */
+  					margin: 0 8px!important; /* 0px in alto/basso, 4px a sinistra/destra */
+					}
+
+
+					.image-stack-container {
+					  /* Imposta le dimensioni desiderate per l'intero "blocco" di immagini */
+					  width: 100%; /* Esempio */
+					  height: 220px; /* Esempio */
+					  position: relative; /* Fondamentale: rende questo il punto di riferimento per gli elementi posizionati in assoluto */
+					  overflow: hidden; /* Nasconde qualsiasi cosa fuoriesca da questo contenitore (utile per le immagini di sfondo che potrebbero essere "coperte") */
+					}
+
+					.background-image {
+					  position: absolute; /* Posiziona l'immagine di sfondo relativamente al .image-stack-container */
+					  top: 0;
+					  left: 0;
+					  width: 100%; /* Copre l'intera larghezza del contenitore */
+					  height: auto; /* Copre l'intera altezza del contenitore */
+					  object-fit: cover; /* Assicura che l'immagine di sfondo riempia il contenitore senza distorsioni, tagliando se necessario */
+					  z-index: 1; /* Assicurati che sia sotto l'immagine sovrapposta */
+					}
+
+
+					.overlay-image-wrapper {
+					  position: absolute; /* Posiziona questo wrapper relativamente al .image-stack-container */
+					  /* Imposta la posizione e le dimensioni della "finestra" per l'immagine tagliata */
+					  top: 50px;   /* Distanza dal bordo superiore del contenitore principale */
+					  left: 90px; /* Distanza dal bordo sinistro del contenitore principale */
+					  width: 200px; /* Larghezza della finestra di ritaglio */
+					  height: 250px; /* Altezza della finestra di ritaglio */
+					  overflow: hidden; /* **Essenziale per il ritaglio**: nasconde le parti dell'immagine che escono da questo wrapper */
+					  z-index: 2; /* Assicurati che sia sopra l'immagine di sfondo */
+					  border-radius: 10px; /* Aggiungi bordi arrotondati se vuoi un ritaglio con angoli morbidi */
+					  /* background-color: rgba(0, 255, 0, 0.3); /* Utile per debug, per vedere dove si trova il wrapper */
+					}
+
+					.clipped-image {
+					  /* Imposta le dimensioni dell'immagine all'interno del suo wrapper, e come si adatta */
+					  width: 100%;   /* L'immagine occupa la larghezza del suo wrapper */
+					  height: 100%;  /* L'immagine occupa l'altezza del suo wrapper */
+					  object-fit: cover; /* Assicura che l'immagine riempia il wrapper senza distorsioni, tagliando le parti in eccesso */
+					  object-position: center; /* Puoi regolare questo per specificare quale parte dell'immagine mostrare (es. 'top', '20% 80%') */
+
+					  /* Alternativa per posizionamento manuale (se non usi object-fit: cover) */
+					  /* position: absolute; */
+					  /* top: -50px;  */ /* Sposta l'immagine all'interno del wrapper per tagliare */
+					  /* left: -30px; */ /* Sposta l'immagine all'interno del wrapper per tagliare */
+					}
+					/*fine home mobile*/
+
+					/*inizio shop mobile*/
+						.sidebar-col {
+							padding: 0px!important;
+						}
+
+						.offcanvas-backdrop {
+							display: none;
+						}
+
+						/*bottone quando la sidebar è aperta */
+				    .btn-warning.active-button {
+				      background-color: #333333!important;
+				    }
+
+						.offcanvas-custom.offcanvas-start {
+				      transition: transform 0.6s ease-out; /* durata transizione */
+				    }
+
+						.noUi-target {
+							width: 250px!important;
+						}
+
+						/*.custom-row {
+						    width: 265px;
+						    display: flex;
+						    justify-content: space-between;
+						    align-items: center;
+						  }*/
+
+						  /*.custom-row .col-auto {*/
+						    /* Potresti dover regolare max-width o flex-basis qui
+						       a seconda delle dimensioni intrinseche delle tue immagini */
+						    /*flex-shrink: 0;*/ /* Impedisce agli elementi di rimpicciolirsi */
+						  /*}*/
+
+
+
+					    .gallery-shop {
+					      display: none; /* Nasconde il layout di default */
+					    }
+
+							.img-box-shop {
+					      flex: 1;
+					      display: flex;
+					      justify-content: center;
+					    }
+
+					    .img-uniform-shop {
+					      height: 31px;
+					      width: auto;
+					      object-fit: contain;
+					      /*border: 2px solid #ccc;*/
+					    }
+
+
+							.gallery-shop {
+						        display: flex !important;
+						        justify-content: space-between;
+						        align-items: flex-start;
+						        gap: 1rem;
+										overflow-x:auto;
+						      }
+
+
+					/*fine shop mobile*/
+
+
+					/*inizio prodotto singolo annuncio frame mobile*/
+					.clipped-image2 {
+					  /* Imposta le dimensioni dell'immagine all'interno del suo wrapper, e come si adatta */
+					  width: 100%;   /* L'immagine occupa la larghezza del suo wrapper */
+					  height: 100%;  /* L'immagine occupa l'altezza del suo wrapper */
+					  object-fit: cover; /* Assicura che l'immagine riempia il wrapper senza distorsioni, tagliando le parti in eccesso */
+					  object-position: center 60px; /* Puoi regolare questo per specificare quale parte dell'immagine mostrare (es. 'top', '20% 80%') */
+
+					  /* Alternativa per posizionamento manuale (se non usi object-fit: cover) */
+					  /* position: absolute; */
+					  /* top: -50px;  */ /* Sposta l'immagine all'interno del wrapper per tagliare */
+					  /* left: -30px; */ /* Sposta l'immagine all'interno del wrapper per tagliare */
+					}
+
+					.overlay-image-wrapper2 {
+						position: absolute;
+						z-index: 2;
+						/*top: 20px;*/
+					  left: 90px;
+						width: 200px;
+					  height: 250px;
+						overflow: hidden;
+					  border-radius: 10px;
+					}
+
+					.img-uniform {
+			      height: 100px;
+			      width: auto;
+			      object-fit: contain;
+			      /*border: 2px solid #ccc;*/
+			    }
+
+
+					/*fine prodotto singolo annuncio frame mobile*/
+
+					/*inizio carrello popup*/
+					.modal-backdrop {
+						display: none;
+					}
+
+					.top-popup {
+						margin-top:150px;
+					}
+
+					.modal-content {
+						border: 0px!important;
+					}
+
+					.item-delivery {
+						margin-bottom: 6px!important;
+					}
+
+
+					.item-image {
+							margin-right: 10px !important;
+					}
+
+					.item-quantity {
+						margin-right: 10px!important;
+					}
+
+
+					/*fine carrello popup*/
+
+
+					/*inizio checkout*/
+					.tra-menu-e-titolo {
+						margin-top: 20px;
+					}
+
+					.m-input {
+					    margin-bottom: 1.5rem !important; /* Il !important è spesso usato da Bootstrap per le sue classi utility */
+					}
+
+					.carte {
+						padding:0px 10px 0px 10px!important;
+					}
+
+					.carte-spunta {
+						padding:0px 10px 0px 35px!important;
+					}
+
+					div.sfondino {
+						/* Il gradiente è sopra l'immagine */
+					background: url("ufficiale/background-menu-btn-2-1-grigio.svg") left top no-repeat,
+					linear-gradient(to right, #faf9f8 100%);
+
+					background-size: 100% auto, auto; /* Assicurati di impostare le dimensioni per entrambi gli sfondi */
+					/* Il primo valore di background-size è per il gradiente, il secondo per l'immagine.
+						 'auto' per l'immagine significa che userà la sua dimensione originale. */
+					}
+
+
+					.bordo-centrato-checkout {
+					    /* Il div stesso ha il bordo inferiore */
+					    border-bottom: 2px solid #e8e8e8; /* Spessore e colore del bordo */
+					    padding-bottom: 5px; /* Aggiungi un piccolo padding se vuoi spazio tra il contenuto e il bordo */
+
+					    /* Rimuovi completamente la sezione ::after per questo div, non è più necessaria */
+					    /* Assicurati che non ci siano altre regole che sovrascrivono il border-bottom */
+					}
+
+
+					.fixed-bottom-conteggio {
+					  position: fixed; /* Questa è la proprietà chiave */
+					  bottom: 0;       /* Posiziona l'elemento al bordo inferiore */
+					  left: 0;         /* Posiziona l'elemento al bordo sinistro */
+					  width: 100%;     /* Fa sì che l'elemento occupi tutta la larghezza disponibile */
+					  z-index: 1030;   /* Assicura che l'elemento sia sopra la maggior parte degli altri contenuti */
+						padding: 0 10px 10px 10px;
+						background-color:#faf9f8;
+					}
+					/*fine checkout*/
+
+
+					/*inizio accedi*/
+					.no-margin-footer-mobile footer {
+			        margin-top: 0 !important; /* Sovrascrive il margin-top a 0 per la pagina specifica su mobile */
+			    }
+
+
+					/*fine accedi*/
+
+					/*inizio profilo utente*/
+					.larg-mass {
+						width: 100% !important;
+					}
+
+
+					.sfondo-profilo-mobile {
+						background: url("ufficiale/background-menu-btn-2-2-grigio.svg") right top repeat;
+						background-size: auto;
+					}
+
+					.scostamento-top {
+						padding-top: 150px;
+					}
+
+
+					.menu-item-profilo-utente {
+							height: 50px;
+							width: 131px;
+							align-items: center;
+							/*padding: 0.75rem 1rem;*/
+							cursor: pointer;
+							text-decoration: none;
+							color: #495057!important;
+							border-right: 4px solid transparent; /* Bordo destro trasparente di default */
+					}
+
+					.menu-item-profilo-utente img {
+							width: 24px;
+							height: auto;
+							margin-right: 0.75rem;
+					}
+
+					.menu-item-profilo-utente.active {
+							color: #fd7e14 !important;
+							font-weight: bold;
+
+					}
+					/*fine profilo utente*/
+
+					/*inizio pagina carrello mobile*/
+					.sfondo-pcm {
+						background: url("ufficiale/background-menu-btn-2-1-grigio.svg") right top repeat;
+						background-size: auto;
+					}
+					/*fine pagina carrello mobile*/
+
+
+					/*inizio profilo venditore*/
+					.cane-profilo-venditore {
+							background-color: #fef1eb!important;
+							background: url("ufficiale/background-menu-btn-2-2-profilo-venditore.svg") right top repeat;
+							background-size: auto 100%;
+					}
+
+					.sfondo-input-venditore {
+							background-color: #FAF9F8!important;
+
+							background: url("ufficiale/background-menu-btn-2-3-venditore.svg") right top repeat;
+
+							background-size: auto;
+					}
+
+
+					.padd-form-venditore {
+						padding: 30px;
+					}
+
+
+					/*fine profilo venditore*/
+
+
+
+		}/*mobile*/
+
+
+		@media screen and (min-width: 768px) and (max-width: 1400px) and (orientation: landscape) {
+
+				.sideshop {
+					font-size: 13px !important;
+				}
+
+				.gallery-shop {
+						gap: 0.6rem; /* Spazio tra le immagini */
+				}
+
+				.img-uniform-shop {
+						height: 3vh; /* Mantiene l'altezza fissa */
+				}
+
+				.img-box-shop {
+					padding: 0;
+				}
+
+		}/*landscape tablet*/
+
+
+
+/* Media Query specifica per tablet in modalità verticale (portrait) */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    /* Stili specifici per tablet in verticale */
+
+
+	/*ex main*/
+	.sezione-cane {
+		background-color:#faf9f8;
+
+
+
+		background-image: url('ufficiale/logo-mobile.svg'), url('ufficiale/cerchio-alternativo.svg'), url('ufficiale/impronte-cta1.svg');
+		background-position: right bottom, right bottom, 20% bottom;
+		background-repeat: no-repeat, no-repeat, no-repeat;
+		background-size: 45% auto, 35% auto, auto 105%!important;
+
+		padding-top: 130px;
+		padding-bottom: 70px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		height: 600px;
+	}
+
+
+	.fortablet {
+		font-size: 1vw!important;
+	}
+
+	.fortablet2 {
+		font-size: 1.1vh!important;
+	}
+
+
+	.font-shop {
+		font-size: 13px;
+	}
+
+	.riduzione-tablet {
+		width: auto;
+		height: 20px;
+	}
+
+
+	.noacapo-tablet {
+		white-space: nowrap;
+	}
+
+	.img-uniform {
+		height: 9vh;
+	}
+
+	.mt-tablet {
+		margin-top: 10px!important;
+	}
+
+	.pd-desk {
+		padding-right: 0px;
+	}
+
+
+	.falco {
+
+
+		background: url('ufficiale/petbuy-falco-1.svg') right bottom no-repeat,
+		            url('ufficiale/Shape.svg') right bottom no-repeat,
+		            url('ufficiale/impronte-riga-falco.svg') 30% top no-repeat,
+		            linear-gradient(110deg, #faf9f8 60%, transparent 40%),
+		            url("ufficiale/background-menu-btn-2-1.svg") right top no-repeat;
+
+			background-size: 70%, 50%, auto 100%, 100% auto, 50% auto;
+			background-position: right bottom, right bottom, 30% top, left top, right top;
+			z-index: auto, auto, 0, auto, 10; /* Assicurati che il linear-gradient abbia uno z-index maggiore */
+
+
+		background-color: #ffffff;
+
+		padding-top: 70px;
+		padding-bottom: 70px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		height: 500px;
+	}
+
+
+	.switch-risultati-shop {
+		position: absolute!important;
+		/*top: 10px;*/
+		left: calc(10% + 10px);
+	}
+
+	.switch-shop2 {
+		position: absolute!important;
+		/*top: 10px;*/
+		left: calc(35% + 10px);
+	}
+
+	.mt-cuore-pref-tablet {
+		margin-top: 20px!important;
+	}
+
+
+	.h1tablet {
+		font-size: 2.8vw;
+	}
+
+	.font-annuncio {
+		font-size: 1.3vw!important;
+	}
+
+
+	.sfondo-crocchette-bundle {
+
+		/*padding-top: 50px;*/
+		padding-bottom: 50px!important;
+
+
+		/*bottom:0;
+		left:0;*/
+
+		background: url("ufficiale/impronte-prodotto-bundle.svg");
+		background-repeat: no-repeat;
+		background-size: 400px;
+		background-position: 17% -50px;
+	}
+
+
+	.ps-desk {
+		padding-left: 0px;
+	}
+
+
+	a.fs-5 {
+		font-size: 1rem !important;
+	}
+
+
+	.conta-sped-annuncio {
+		position: absolute!important;
+		/*top: 10px;*/
+		left: calc(37% + 10px);
+	}
+
+	.riga-conta-sped-annuncio {
+		padding-bottom: 70px!important;
+	}
+
+	.pt-tablet {
+		padding-top: 90px;
+	}
+
+
+	.p-conta-prodotto-frame {
+		position: absolute!important;
+		right: 0px!important;
+	}
+
+	hr.m-conta-prodotto-frame {
+		margin-top: 110px!important;
+	}
+
+	.spaz-guarantee {
+		padding-bottom: 30px!important;
+	}
+
+	.item-image-conteggio {
+		margin: 0px!important;
+	}
+
+
+	.ilform {
+		padding-left:0px;
+		padding-right:0px;
+	}
+
+	.larg-mass-tablet {
+		width: 100% !important;
+	}
+
+	.profilo-ordini {
+		left: 5px!important;
+		top: 30px!important;
+	}
+
+	.impronta1-arancio-accedi {
+		position: absolute;
+		bottom: 500px;
+		left: -60px;
+		z-index: 1;
+	}
+
+	.impronta2-arancio-accedi {
+		position: absolute;
+		bottom: 471px;
+		left: -66px;
+		z-index: 1;
+	}
+
+	.impronta-grande-dx-accedi {
+		position: absolute;
+		bottom: 150px;
+		right: -30px;
+		z-index: 1;
+	}
+
+	.impronta-piccola-dx-accedi {
+		position: absolute;
+		bottom: 250px;
+		right: 10px;
+		z-index: 1;
+	}
+
+	.impronta-grande-vicino-cane-dx-accedi {
+		position: absolute;
+		bottom: 200px;
+		right: 70px;
+		z-index: 1;
+	}
+
+	.impronta-piccola-vicino-cane-dx-accedi {
+		position: absolute;
+		bottom: 170px;
+		right: 90px;
+		z-index: 1;
+	}
+
+	.impronta-grande-in-alto-a-sx-accedi {
+		position: absolute;
+		bottom: 150px;
+		left: -40px;
+		z-index: 1;
+	}
+
+	.impronta-piccola-in-alto-a-sx-accedi {
+		position: absolute;
+		bottom: 180px;
+		left: -50px;
+		z-index: 1;
+	}
+
+	.impronta-grande-in-basso-a-sx-accedi {
+		position: absolute;
+		bottom: 50px;
+		left: -60px;
+		z-index: 1;
+	}
+
+
+	.impronta-piccola-in-basso-a-sx-accedi {
+		position: absolute;
+		bottom: 50px;
+		left: 10px;
+		z-index: 1;
+	}
+
+
+	/*hr.m-conta-prodotto-frame-top {
+		margin-top: 140px!important;
+	}*/
+
+	.m-carrello {
+		margin-top:20px;
+	}
+
+	.pad-procedi-carrello {
+		padding: 0 8px!important;
+	}
+
+	.sfondo-cane-nero-aggiungi {
+				background-position: 90% -20px;
+			}
+
+	.nascondi-su-tablet {
+		visibility: hidden;
+	}
+
+	.gallery-shop {
+    gap: 0.6rem; /* Spazio tra le immagini */
+}
+
+.img-uniform-shop {
+    height: 22.4px; /* Mantiene l'altezza fissa */
+}
+
+.img-box-shop {
+	padding: 0;
+}
+
+
+.bone-product-wrapper .paw-print-sx {
+        top: -10%; /* Posizione leggermente diversa per tablet, se necessario */
+        left: -3%;
+    }
+    .bone-product-wrapper .paw-print-dx {
+        top: 65%;
+        left: 65%;
+    }
+
+
+		.bone-product-wrapper .paw-print-sx2 {
+		        top: -25%; /* Posizione leggermente diversa per tablet, se necessario */
+		        left: 75%;
+		    }
+		    .bone-product-wrapper .paw-print-dx2 {
+		        top: 85%;
+		        left: -5%;
+		    }
+
+				.pdn-negozio-venditore {
+					padding: 0;
+				}
+
+				.larghezza-auto-tablet {
+					width: auto!important;
+				}
+
+				.cane-profilo-venditore {
+						background-color: #fef1eb!important;
+						background: url("ufficiale/cane-profilo-venditore.svg") right bottom no-repeat,
+						url("ufficiale/background-menu-btn-2-2-profilo-venditore.svg") right top repeat;
+						background-size: auto 50%, auto 100%;
+				}
+
+
+}/*portrait tablet*/
+
+
+
+@media screen and (min-width: 1024px) {
+
+	.ps-annuncio {
+		padding-left: 80px!important;
+	}
+
+	.pd-annuncio {
+		padding-right: 80px!important;
+	}
+
+	.m-carrello {
+		margin-top:80px;
+	}
+
+	/*inizio prodotto singolo prodotto frame*/
+
+	.nascondi-su-desktop {
+		visibility: hidden;
+	}
+
+	/*hr.m-conta-prodotto-frame {
+		margin-top:-25px!important;
+	}*/
+
+	/*fine prodotto singolo prodotto frame*/
+
+}

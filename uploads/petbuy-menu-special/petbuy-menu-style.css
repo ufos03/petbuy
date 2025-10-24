@@ -1,0 +1,261 @@
+
+
+div#container-petbuy-menu {
+    height: 100%;
+    width: 100%;
+    position: static;
+    overflow: hidden;
+    font-family: var(--e-global-typography-primary-font-family), Sans-serif;
+    font-weight: var(--e-global-typography-primary-font-weight);
+}
+
+.aside-section {
+    top: 0;
+    bottom: 0;
+    position: absolute;
+}
+
+.aside-left {
+    display: none;
+    width: 40%;
+    left: 0;
+    background-color: rgb(214,144,55);
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    transform: translateY(-100%);
+    transition: transform 0.4s ease-in-out;
+    z-index: 9999999999;
+}
+
+.aside-right {
+    width: 100%;
+    right: 0;
+    background-color: #fff;
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+}
+
+.aside-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.aside-content {
+    padding: 0 40px;
+    position: relative;
+    color: white;
+    text-align: center;
+}
+
+.aside-right .aside-anchor{
+    color: black;
+    align-self: center;
+    justify-self: center;
+}
+
+.aside-list li {
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.left .aside-anchor::after{
+    background-color: rgb(240,65,36);
+}
+
+.aside-anchor::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    background-color: rgb(214,144,55);
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 3px;
+}
+
+.aside-anchor::before {
+    border-radius: 3px;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    background-color: #fff;
+    left: 0;
+    height: 3px;
+    z-index: 1;
+    width: 50%;
+    -webkit-transition: transform 0.2s ease-in-out;
+    -o-transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out;
+}
+
+.aside-anchor:hover:before, .active::before{ /* in stato ACTIVE */
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transform: translateX(100%);
+}
+
+.aside-anchor {
+    padding-bottom: 7px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 30px;
+    position: relative;
+    font-weight: 500;
+    transition: all 0.4s ease-in-out;
+}
+
+.show-left {
+    transform: translateY(0%);
+}
+
+.show-right {
+    transform: translateX(0%);
+}
+
+.aside-image{
+    padding: 1rem 0;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    background: url("./src/background.jpg") no-repeat center;
+}
+
+.menu-image{
+    object-fit: cover;
+    height: 100%;
+    transform: scale(1.2);
+}
+
+#petbuy-logo-menu-01
+{
+    height: 30%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo-image{
+    height: auto;
+    width: 50%;
+}
+
+.left{
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.grid-list{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 1em 0px;
+    justify-items: start;
+}
+
+.subcategories{
+    margin: 2rem 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem 3rem;
+    padding: 0 1rem;
+}
+
+.hidden{
+    position: relative;
+    visibility: hidden;
+    display: none;
+    height: 0%;
+    width: 100%;
+}
+
+.visible{
+    visibility: visible;
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+#right-side-menu{
+    height: 96%;
+}
+
+#close-area{
+    height: 4%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+#close{
+    padding: 1rem 1rem 0 0;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+@keyframes swipe-right {
+    from { left: 100%; opacity: 0; }
+    to { left: 0%; opacity: 1; }
+}
+
+@keyframes swipe-left {
+    from { left: -100%; opacity: 0; }
+    to { left: 0%; opacity: 1; }
+}
+
+@keyframes swipe-up {
+    from { bottom: -100%; opacity: 0;}
+    to { bottom: 0%; opacity: 1;}
+}
+
+
+@media (min-width: 992px) {
+
+    div#container-petbuy-menu {
+        height: 80%;
+        width: 80%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .aside-left {
+        display: block;
+    }
+
+    .aside-right {
+        width: 60%;
+    }
+
+    #left-list{
+        padding: 0 0 0 4rem;
+    }
+}
+
+@media (max-width: 1280px) {
+
+    #left-list{
+        padding: 0 0 0 2rem;
+    }
+    
+    .aside-anchor, .aside-right .aside-anchor
+    {
+        font-size: 22px;
+    }
+}
