@@ -35,10 +35,6 @@ themes/twentytwentyfour*/
 cache/
 tmp/
 backup/
-node_modules/
-vendor/
-dist/
-build/
 __pycache__/
 *.zip
 *.tar
