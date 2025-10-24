@@ -30,6 +30,8 @@ themes/twentytwentyone*/
 themes/twentytwentytwo*/
 themes/twentytwentythree*/
 themes/twentytwentyfour*/
+themes/shopic*/
+themes/shpic-child*/
 
 # Ignora eventuali cache, backup, build temporanei
 cache/
@@ -39,6 +41,11 @@ __pycache__/
 *.zip
 *.tar
 *.gz
+
+# Composer dependencies
+**/vendor/
+**/composer.lock
+**/composer.phar
 
 # Ignora file specifici dell’IDE o del sistema
 .vscode/

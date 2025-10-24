@@ -7,13 +7,7 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
-require_once WP_CONTENT_DIR . "/themes/shopic-child/JWT/JWT.php";
-require_once WP_CONTENT_DIR . "/themes/shopic-child/JWT/Key.php";
-require_once WP_CONTENT_DIR . "/themes/shopic-child/JWT/CachedKeySet.php";
-require_once WP_CONTENT_DIR . "/themes/shopic-child/JWT/JWK.php";
-require_once WP_CONTENT_DIR . "/themes/shopic-child/JWT/BeforeValidException.php";
-require_once WP_CONTENT_DIR . "/themes/shopic-child/JWT/SignatureInvalidException.php";
-require_once WP_CONTENT_DIR . "/themes/shopic-child/JWT/ExpiredException.php";
+require_once __DIR__ . "/vendor/autoload.php";
 
 
 use Firebase\JWT\JWT;
