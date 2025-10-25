@@ -61,13 +61,10 @@ class ProductService {
             ];
         }
         
-        // Formatta output
-        $productData = $this->formatProduct($product);
-        
         return [
             'success' => true,
             'message' => 'Prodotto recuperato con successo',
-            'data' => $productData,
+            'data' => $this->formatProduct($product),
             'code' => 200
         ];
     }
@@ -118,25 +115,21 @@ class ProductService {
             $pagination['per_page']
         );
         
-        // Formatta prodotti
-        $productsData = [];
-        foreach ($products as $product) {
-            $productsData[] = $this->formatProduct($product);
-        }
-        
-        // Conta totale
+        $productsData = array_map([$this, 'formatProduct'], $products);
+
         $totalCount = $this->repository->count($sanitizedFilters);
-        $totalPages = $pagination['per_page'] > 0 
-            ? ceil($totalCount / $pagination['per_page']) 
+        $totalPages = $pagination['per_page'] > 0
+            ? (int) ceil($totalCount / $pagination['per_page'])
             : 1;
-        
+
         return [
             'success' => true,
             'message' => 'Prodotti recuperati con successo',
             'data' => [
+                'status' => 'ok',
                 'page' => $pagination['page'],
                 'per_page' => $pagination['per_page'],
-                'total_products' => $totalCount,
+                'total_items' => $totalCount,
                 'total_pages' => $totalPages,
                 'content' => $productsData
             ],
@@ -152,20 +145,64 @@ class ProductService {
      */
     private function formatProduct(WC_Product $product): array {
         $productId = $product->get_id();
+        $image = $this->repository->getMainImage($product);
+        $gallery = $this->repository->getGalleryImages($product);
+        $categories = $this->repository->getCategories($productId);
+        $primaryCategory = $categories[0] ?? null;
+        $secondaryCategory = $categories[1] ?? null;
+        $additionalCategories = array_slice($categories, 2);
+        $currency = \get_woocommerce_currency();
+        $regularPrice = $product->get_regular_price();
+        $price = $product->get_price();
+        $salePrice = $product->get_sale_price();
+        $dateCreated = $product->get_date_created();
+        $summarySource = $product->get_short_description() ?: $product->get_description();
         
+        $summary = $summarySource
+            ? \wp_trim_words(\wp_strip_all_tags($summarySource), 35, '...')
+            : '';
+
         return [
+            'type' => 'product',
             'id' => $productId,
-            'name' => $product->get_name(),
-            'price' => (float)$product->get_price(),
-            'sale_price' => (float)$product->get_sale_price(),
-            'is_on_sale' => $product->is_on_sale(),
+            'slug' => $product->get_slug(),
+            'title' => $product->get_name(),
+            'summary' => $summary,
             'permalink' => $product->get_permalink(),
-            'image' => $this->repository->getMainImage($product),
-            'categories' => $this->repository->getCategories($productId),
-            'average_rating' => $product->get_average_rating(),
-            'stock_status' => $product->is_in_stock() ? 'instock' : 'outofstock',
-            'product_type' => $product->get_type(),
-            'add_to_cart_url' => $product->add_to_cart_url(),
+            'price' => [
+                'regular' => $regularPrice !== '' ? (float) $regularPrice : (float) $price,
+                'sale' => $salePrice !== '' ? (float) $salePrice : null,
+                'currency' => $currency,
+                'is_on_sale' => $product->is_on_sale(),
+                'is_gift' => false,
+            ],
+            'media' => [
+                'cover' => $image,
+                'gallery' => $gallery,
+            ],
+            'taxonomy' => [
+                'category' => $primaryCategory,
+                'sub_category' => $secondaryCategory,
+                'additional' => $additionalCategories,
+            ],
+            'stock' => [
+                'status' => $product->get_stock_status(),
+                'quantity' => $product->get_stock_quantity(),
+            ],
+            'location' => [
+                'region' => null,
+                'province' => null,
+            ],
+            'meta' => [
+                'average_rating' => (float) $product->get_average_rating(),
+                'product_type' => $product->get_type(),
+                'date_published' => $dateCreated ? $dateCreated->date('c') : null,
+                'hash' => null,
+            ],
+            'actions' => [
+                'add_to_cart_url' => $product->add_to_cart_url(),
+                'share_url' => $product->get_permalink(),
+            ],
         ];
     }
 }

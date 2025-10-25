@@ -97,6 +97,28 @@ class ProductRepository {
             'sizes'  => wp_get_attachment_image_sizes($imageId, 'woocommerce_thumbnail'),
         ];
     }
+
+    /**
+     * Recupera le immagini galleria del prodotto
+     *
+     * @param WC_Product $product Oggetto prodotto
+     * @return array Lista immagini con metadati
+     */
+    public function getGalleryImages(WC_Product $product): array {
+        $imageIds = $product->get_gallery_image_ids();
+        $images = [];
+
+        foreach ($imageIds as $imageId) {
+            $images[] = [
+                'url'    => wp_get_attachment_url($imageId),
+                'alt'    => get_post_meta($imageId, '_wp_attachment_image_alt', true),
+                'srcset' => wp_get_attachment_image_srcset($imageId, 'woocommerce_thumbnail'),
+                'sizes'  => wp_get_attachment_image_sizes($imageId, 'woocommerce_thumbnail'),
+            ];
+        }
+
+        return $images;
+    }
     
     /**
      * Costruisce gli argomenti per la query WooCommerce

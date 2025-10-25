@@ -6,6 +6,7 @@
 
 # Ignora plugin di cache e SEO non necessari in staging/prod
 plugins/*
+!plugins/Petbuy-Search/
 
 # Ignora TUTTI i file di configurazione
 # (utile per evitare chiavi/API o config locali)

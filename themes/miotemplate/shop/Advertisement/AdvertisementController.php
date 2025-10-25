@@ -95,11 +95,7 @@ class AdvertisementController
 
         $result = $this->service->getAllAdvertisements($filters, $ordering, $pagination);
 
-        return new WP_REST_Response([
-            'status' => 'success',
-            'content' => $result['data'] ?? [],
-            'pagination' => $result['pagination'] ?? null
-        ], $result['code']);
+        return new WP_REST_Response($result['data'], $result['code']);
     }
 
     /**
@@ -120,7 +116,7 @@ class AdvertisementController
         }
 
         return new WP_REST_Response([
-            'status' => 'success',
+            'status' => 'ok',
             'content' => $result['data']
         ], $result['code']);
     }
@@ -142,9 +138,6 @@ class AdvertisementController
             ], $result['code']);
         }
 
-        return new WP_REST_Response([
-            'status' => 'success',
-            'content' => $result['data']
-        ], $result['code']);
+        return new WP_REST_Response($result['data'], $result['code']);
     }
 }

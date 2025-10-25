@@ -12,9 +12,10 @@ require_once WP_CONTENT_DIR . '/themes/miotemplate/two_fa.php';*/
 // ============================================================================
 // OOP MODULES - New Clean Architecture
 // ============================================================================
-require_once WP_CONTENT_DIR . '/themes/miotemplate/bootstrap/advertisement.php';
-require_once WP_CONTENT_DIR . '/themes/miotemplate/bootstrap/product.php';
-require_once WP_CONTENT_DIR . '/themes/miotemplate/bootstrap/mixed.php';
+require_once WP_CONTENT_DIR . '/themes/miotemplate/shop/bootstrap/advertisement.php';
+require_once WP_CONTENT_DIR . '/themes/miotemplate/shop/bootstrap/product.php';
+require_once WP_CONTENT_DIR . '/themes/miotemplate/shop/bootstrap/mixed.php';
+require_once WP_CONTENT_DIR . '/themes/miotemplate/shop/Category/bootstrap.php';
 
 // Legacy files (DEPRECATED - kept for reference only)
 // require_once WP_CONTENT_DIR . '/themes/miotemplate/advertisement.php';

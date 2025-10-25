@@ -9,10 +9,10 @@
  */
 
 // Autoload delle classi Mixed
-require_once __DIR__ . '/../shop/Mixed/MixedRepository.php';
-require_once __DIR__ . '/../shop/Mixed/MixedService.php';
-require_once __DIR__ . '/../shop/Mixed/MixedController.php';
-require_once __DIR__ . '/../shop/Mixed/MixedSearchCache.php';
+require_once __DIR__ . '/../Mixed/MixedRepository.php';
+require_once __DIR__ . '/../Mixed/MixedService.php';
+require_once __DIR__ . '/../Mixed/MixedController.php';
+require_once __DIR__ . '/../Mixed/MixedSearchCache.php';
 
 use App\Mixed\MixedRepository;
 use App\Mixed\MixedService;

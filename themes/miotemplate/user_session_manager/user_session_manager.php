@@ -23,8 +23,9 @@ use Exception;
 /**
  * Class UserSessionManager
  *
- *
- * Gestisce la generazione, validazione, aggiornamento e distruzione dei token JWT.
+ * Gestisce la generazione, validazione, aggiornamento e distruzione dei token JWT
+ * utilizzando l'ora di WordPress (`current_time`) per garantire coerenza con il database.
+ * La pulizia periodica dei token scaduti viene effettuata da un cron job dedicato.
  */
 class UserSessionManager  // Implementa un metodo che da un token ritorni lo user ID
 {
@@ -55,19 +56,21 @@ class UserSessionManager  // Implementa un metodo che da un token ritorni lo use
     }
 
     /**
-     * Genera un nuovo token JWT per un utente.
+     * Genera e persist e un nuovo token JWT per un utente.
      *
-     * @param int $userId   ID dell'utente.
-     * @param int $expiry   Tempo di scadenza in secondi.
+     * L'orario di emissione e scadenza viene calcolato tramite `current_time` per
+     * mantenere allineamento con le date memorizzate nel database.
      *
-     * @return string       Token JWT generato.
+     * @param int $userId ID dell'utente.
+     * @param int $expiry Vita del token in secondi (default 1 ora).
      *
-     * @throws Exception    Se si verifica un errore durante la generazione o il salvataggio del token.
+     * @return string Token JWT generato.
+     *
+     * @throws Exception Se si verifica un errore durante la generazione o il salvataggio.
      */
     public function generateToken(int $userId, int $expiry = 3600): string
     {
-        date_default_timezone_set('Europe/Rome');
-        $issuedAt = time();
+        $issuedAt = \current_time('timestamp');
         $expire = $issuedAt + $expiry;
 
         $payload = [
@@ -88,7 +91,7 @@ class UserSessionManager  // Implementa un metodo che da un token ritorni lo use
             [
                 'user_id'    => $userId,
                 'token'      => $jwt,
-                'expires_at' => date('Y-m-d H:i:s', $expire)
+                'expires_at' => \wp_date('Y-m-d H:i:s', $expire)
             ],
             [
                 '%d',
@@ -107,13 +110,13 @@ class UserSessionManager  // Implementa un metodo che da un token ritorni lo use
     /**
      * Elimina i token scaduti dal database.
      *
-     * @return int    Numero di token eliminati.
+     * @return int Numero di righe eliminate.
      */
     public function deleteExpiredTokens(): int
     {
         global $wpdb;
 
-        $current_time = current_time('mysql');
+        $current_time = \current_time('mysql');
 
         $deleted = $wpdb->query(
             $wpdb->prepare(
@@ -193,11 +196,17 @@ class UserSessionManager  // Implementa un metodo che da un token ritorni lo use
     }
 
     /**
-     * Verifica se un token è valido.
+     * Verifica e decodifica un token JWT.
      *
-     * @param string $token   Token JWT da verificare.
+     * Esegue tre controlli:
+     *  1. Decodifica la firma tramite la secret Key.
+     *  2. Verifica che il token esista ancora nel database e che il challenge 2FA combaci.
+     *  3. Confronta la data di scadenza salvata nel DB con l'orario corrente. Se scaduto, il token viene distrutto.
      *
-     * @return object|false   Oggetto decodificato se valido, false altrimenti.
+     * @param string $token Token JWT da verificare.
+     * @param int    $two_fa_challenge Stato del challenge 2FA richiesto (default 1).
+     *
+     * @return object|false Payload decodificato se valido, false altrimenti.
      */
     public function validateToken(string $token, int $two_fa_challenge = 1)
     {
@@ -206,21 +215,30 @@ class UserSessionManager  // Implementa un metodo che da un token ritorni lo use
 
             global $wpdb;
 
-            $exists = $wpdb->get_var(
+            $row = $wpdb->get_row(
                 $wpdb->prepare(
-                    "SELECT COUNT(*) FROM {$this->tableName} WHERE token = %s AND twofa_challenge = %d",
+                    "SELECT expires_at FROM {$this->tableName} WHERE token = %s AND twofa_challenge = %d LIMIT 1",
                     $token,
                     $two_fa_challenge
-                )
+                ),
+                ARRAY_A
             );
 
-            if ($exists == 0) {
+            if (!$row) {
+                return false;
+            }
+
+            $expiresAt = isset($row['expires_at']) ? strtotime($row['expires_at']) : false;
+            if ($expiresAt !== false && $expiresAt <= \current_time('timestamp')) {
+                $this->destroyToken($token);
                 return false;
             }
 
             return $decoded;
+        } catch (ExpiredException $e) {
+            $this->destroyToken($token);
+            return false;
         } catch (Exception $e) {
-            // Token non valido o scaduto
             return false;
         }
     }

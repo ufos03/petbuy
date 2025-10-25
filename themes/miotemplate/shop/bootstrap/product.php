@@ -9,10 +9,10 @@
  */
 
 // Autoload delle classi Product
-require_once __DIR__ . '/../shop/Product/ProductRepository.php';
-require_once __DIR__ . '/../shop/Product/ProductValidator.php';
-require_once __DIR__ . '/../shop/Product/ProductService.php';
-require_once __DIR__ . '/../shop/Product/ProductController.php';
+require_once __DIR__ . '/../Product/ProductRepository.php';
+require_once __DIR__ . '/../Product/ProductValidator.php';
+require_once __DIR__ . '/../Product/ProductService.php';
+require_once __DIR__ . '/../Product/ProductController.php';
 
 use App\Product\ProductRepository;
 use App\Product\ProductValidator;

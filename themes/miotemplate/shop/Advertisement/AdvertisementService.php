@@ -332,11 +332,11 @@ class AdvertisementService
         // Valida e sanitizza input
         $validFilters = $this->validator->validateFilters($filters);
         
-        // Conta totale
         $total = $this->repository->count($validFilters);
-        $totalPages = ceil($total / $pagination['per_page']);
+        $totalPages = $pagination['per_page'] > 0
+            ? (int) ceil($total / $pagination['per_page'])
+            : 1;
 
-        // Recupera annunci
         $ads = $this->repository->findAll(
             $validFilters,
             $ordering['order_by'],
@@ -345,21 +345,20 @@ class AdvertisementService
             $pagination['offset']
         );
 
-        // Formatta risultati
-        $formatted = [];
-        foreach ($ads as $ad) {
+        $formatted = array_map(function ($ad) {
             $images = $this->repository->getImages($ad->id);
-            $formatted[] = $this->formatAdvertisement($ad, $images);
-        }
+            return $this->formatAdvertisement($ad, $images);
+        }, $ads);
 
         return [
             'success' => true,
-            'data' => $formatted,
-            'pagination' => [
-                'total' => $total,
+            'data' => [
+                'status' => 'ok',
+                'page' => $pagination['page'],
+                'per_page' => $pagination['per_page'],
+                'total_items' => $total,
                 'total_pages' => $totalPages,
-                'current_page' => $pagination['page'],
-                'per_page' => $pagination['per_page']
+                'content' => $formatted,
             ],
             'code' => 200
         ];
@@ -389,17 +388,20 @@ class AdvertisementService
 
         $ads = $this->repository->findByUserId($userId);
         
-        $formatted = [];
-        foreach ($ads as $ad) {
+        $formatted = array_map(function ($ad) {
             $images = $this->repository->getImages($ad->id);
-            $formattedAd = $this->formatAdvertisement($ad, $images);
-            $formattedAd['status'] = $ad->ad_status; // Includi status per annunci utente
-            $formatted[] = $formattedAd;
-        }
+            $item = $this->formatAdvertisement($ad, $images);
+            $item['meta']['status'] = $ad->ad_status ?? null;
+            return $item;
+        }, $ads);
 
         return [
             'success' => true,
-            'data' => $formatted,
+            'data' => [
+                'status' => 'ok',
+                'total_items' => count($formatted),
+                'content' => $formatted,
+            ],
             'code' => 200
         ];
     }
@@ -513,31 +515,79 @@ class AdvertisementService
      */
     private function formatAdvertisement(object $ad, array $images): array
     {
-        $imageLinks = array_map(function($img) {
-            return $img->link;
+        $gallery = array_map(static function ($img) use ($ad) {
+            return [
+                'url' => $img->link,
+                'alt' => $ad->ad_name ?? '',
+                'srcset' => '',
+                'sizes' => '',
+            ];
         }, $images);
 
+        $summary = $ad->ad_description
+            ? \wp_trim_words(\wp_strip_all_tags($ad->ad_description), 35, '...')
+            : '';
+
+        $isGift = ($ad->gift ?? 'F') === 'T';
+        $isOnSale = ($ad->on_sale ?? 'F') === 'T';
+        $currency = \get_woocommerce_currency();
+        $hash = $ad->advertisement_hash ?? '';
+        $permalink = \home_url('/annunci/' . $hash);
+
         return [
+            'type' => 'advertisement',
+            'id' => $hash !== '' ? $hash : (string) ($ad->id ?? ''),
+            'slug' => $hash ?: \sanitize_title($ad->ad_name ?? ''),
             'title' => $ad->ad_name ?? '',
-            'region' => $ad->ad_state ?? '',
-            'province' => $ad->province ?? '',
-            'description' => $ad->ad_description ?? '',
-            'health' => $ad->health ?? '',
-            'has_cites' => $ad->cites ?? 'F',
-            'price' => isset($ad->price) ? floatval($ad->price) : 0,
-            'sale_price' => isset($ad->sale_price) ? floatval($ad->sale_price) : 0,
-            'is_gift' => $ad->gift ?? 'F',
-            'on_sale' => $ad->on_sale ?? 'F',
-            'category' => $ad->category ?? '',
-            'sub_category' => $ad->sub_category ?? '',
-            'contact' => $ad->contact ?? '',
-            'birth' => $ad->birth ?? '',
-            'weight' => isset($ad->animal_weight) ? floatval($ad->animal_weight) : 0,
-            'sex' => $ad->sex ?? '',
-            'cover' => $ad->link_cover ?? '',
-            'date' => $ad->creation_date ?? '',
-            'hash' => $ad->advertisement_hash ?? '',
-            'images' => $imageLinks
+            'summary' => $summary,
+            'permalink' => $permalink,
+            'price' => [
+                'regular' => isset($ad->price) ? (float) $ad->price : 0.0,
+                'sale' => isset($ad->sale_price) && $ad->sale_price !== null ? (float) $ad->sale_price : null,
+                'currency' => $currency,
+                'is_on_sale' => $isOnSale,
+                'is_gift' => $isGift,
+            ],
+            'media' => [
+                'cover' => [
+                    'url' => $ad->link_cover ?? '',
+                    'alt' => $ad->ad_name ?? '',
+                    'srcset' => '',
+                    'sizes' => '',
+                ],
+                'gallery' => $gallery,
+            ],
+            'taxonomy' => [
+                'category' => $ad->category
+                    ? ['name' => $ad->category, 'url' => null]
+                    : null,
+                'sub_category' => $ad->sub_category
+                    ? ['name' => $ad->sub_category, 'url' => null]
+                    : null,
+                'additional' => [],
+            ],
+            'stock' => [
+                'status' => ($ad->ad_status ?? '') === 'APPROVED' ? 'available' : 'unavailable',
+                'quantity' => null,
+            ],
+            'location' => [
+                'region' => $ad->ad_state ?? null,
+                'province' => $ad->province ?? null,
+            ],
+            'meta' => [
+                'health' => $ad->health ?? '',
+                'has_cites' => ($ad->cites ?? 'F') === 'T',
+                'birth_date' => $ad->birth ?? null,
+                'weight' => isset($ad->animal_weight) ? (float) $ad->animal_weight : null,
+                'sex' => $ad->sex ?? null,
+                'contact' => $ad->contact ?? '',
+                'date_published' => $ad->creation_date ?? null,
+                'hash' => $hash,
+            ],
+            'actions' => [
+                'contact_phone' => $ad->contact ?? '',
+                'share_url' => $permalink,
+            ],
         ];
     }
 }

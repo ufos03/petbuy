@@ -1,49 +1,72 @@
 <?php
 
-// Verifica che il file esista prima di includerlo
-$file_path = WP_CONTENT_DIR . "/themes/shopic-child/user_session_manager/user_session_manager.php";
+namespace App\Auth;
 
-use App\Auth\UserSessionManager;
-
-
-
-// Funzione di pulizia dei token scaduti
-function session_cleaner_func() {
-    error_log("JWT Token Manager: Avvio della pulizia dei token scaduti.");
-
-    // Assicurati che USM_SECRET_KEY sia definita
-    if (!defined('USM_SECRET_KEY')) {
-        error_log("JWT Token Manager: USM_SECRET_KEY non è definita.");
-        return;
-    }
-
-    // Verifica che la classe esista
-    if (!class_exists('App\Auth\UserSessionManager')) {
-        error_log("JWT Token Manager: La classe UserSessionManager non esiste.");
-        return;
-    }
-
-    try {
-        $user_manager = new UserSessionManager(USM_SECRET_KEY, "petbuy.com", "https://petbuy-local.ns0.it:8080");
-        error_log("JWT Token Manager: Istanza di UserSessionManager creata con successo.");
-        
-        $deletedCount = $user_manager->deleteExpiredTokens();
-        error_log("JWT Token Manager: deleteExpiredTokens eseguita. Token eliminati: {$deletedCount}.");
-
-        if ($deletedCount > 0) {
-            error_log("JWT Token Manager: Eliminati {$deletedCount} token scaduti.");
-        } else {
-            error_log("JWT Token Manager: Nessun token scaduto da eliminare.");
-        }
-    } catch (Exception $e) {
-        error_log("JWT Token Manager: Errore durante la pulizia dei token: " . $e->getMessage());
-    }
+if (!defined('ABSPATH')) {
+    exit;
 }
 
+require_once __DIR__ . '/user_session_manager.php';
 
-function start()
+const PETBUY_SESSION_CRON_HOOK = 'petbuy_session_cleanup';
+const PETBUY_SESSION_CRON_INTERVAL = 'petbuy_session_fifteen_min';
+
+/**
+ * Registra un intervallo custom di 15 minuti per la pulizia dei token.
+ */
+function petbuy_register_session_interval(array $schedules): array
 {
-    if ( ! wp_next_scheduled( 'session_cleaner' ) ) {
-        wp_schedule_event( time(), 'five_seconds', 'session_cleaner' );
+    if (!isset($schedules[PETBUY_SESSION_CRON_INTERVAL])) {
+        $schedules[PETBUY_SESSION_CRON_INTERVAL] = [
+            'interval' => 15 * \MINUTE_IN_SECONDS,
+            'display'  => __('Every 15 Minutes (Petbuy Sessions)', 'petbuy'),
+        ];
+    }
+
+    return $schedules;
+}
+\add_filter('cron_schedules', __NAMESPACE__ . '\\petbuy_register_session_interval');
+
+/**
+ * Pianifica il cron se non è già presente.
+ */
+function petbuy_schedule_session_cleanup(): void
+{
+    if (!\wp_next_scheduled(PETBUY_SESSION_CRON_HOOK)) {
+        \wp_schedule_event(time(), PETBUY_SESSION_CRON_INTERVAL, PETBUY_SESSION_CRON_HOOK);
     }
 }
+\add_action('init', __NAMESPACE__ . '\\petbuy_schedule_session_cleanup');
+
+/**
+ * Annulla il cron quando il tema viene disattivato/cambiato.
+ */
+function petbuy_unschedule_session_cleanup(): void
+{
+    $timestamp = \wp_next_scheduled(PETBUY_SESSION_CRON_HOOK);
+    if ($timestamp) {
+        \wp_unschedule_event($timestamp, PETBUY_SESSION_CRON_HOOK);
+    }
+}
+\add_action('switch_theme', __NAMESPACE__ . '\\petbuy_unschedule_session_cleanup');
+
+/**
+ * Handler che elimina i token scaduti.
+ */
+function petbuy_session_cleanup_handler(): void
+{
+    if (!defined('USM_SECRET_KEY')) {
+        return;
+    }
+
+    if (!class_exists(UserSessionManager::class)) {
+        return;
+    }
+
+    $issuer = \wp_parse_url(\home_url(), PHP_URL_HOST) ?: 'petbuy.local';
+    $audience = \home_url('/');
+
+    $manager = new UserSessionManager(USM_SECRET_KEY, $issuer, $audience);
+    $manager->deleteExpiredTokens();
+}
+\add_action(PETBUY_SESSION_CRON_HOOK, __NAMESPACE__ . '\\petbuy_session_cleanup_handler');

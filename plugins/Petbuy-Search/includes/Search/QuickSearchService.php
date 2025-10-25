@@ -26,6 +26,9 @@ class QuickSearchService
     /** @var array Impostazioni del servizio di ricerca */
     private array $settings;
 
+    /** @var MetricsRepository Gestore delle metriche ricerca */
+    private MetricsRepository $metrics;
+
     /** @var string Indice prodotti/annunci (default: rt_ads_prods) */
     private string $idxProducts;
 
@@ -40,9 +43,18 @@ class QuickSearchService
 
     public function __construct()
     {
-        $this->client   = new Client([ 'host' => '127.0.0.1', 'port' => 9308 ]);
-        $this->settings = get_option(PETBUY_QS_SETTINGS);
+        $storedSettings = get_option(PETBUY_QS_SETTINGS);
+        $this->settings = is_array($storedSettings) ? $storedSettings : [];
+
+        $host = $this->settings['manticore_host'] ?? '127.0.0.1';
+        $port = isset($this->settings['manticore_port']) ? (int) $this->settings['manticore_port'] : 9308;
+        if ($port <= 0) {
+            $port = 9308;
+        }
+
+        $this->client   = new Client([ 'host' => $host, 'port' => $port ]);
         $this->cache    = new SmartCache($this->settings['cache_group'] ?? 'QSEARCH');
+        $this->metrics  = new MetricsRepository();
 
         $this->idxProducts = $this->settings['index_products'] ?? 'rt_ads_prods';
         $this->idxStores   = $this->settings['index_stores']   ?? 'rt_dokan_stores';
@@ -59,7 +71,6 @@ class QuickSearchService
      */
     public function rest_search(\WP_REST_Request $req)
     {
-        $startTime = microtime(true);
         $term  = sanitize_text_field($req['s']);
         $limit = (int) ($this->settings['limit_results'] ?? 10);
 
@@ -78,14 +89,21 @@ class QuickSearchService
         $cacheKey = $this->tokenToCacheKey($token);
         
         // Esegue ricerca Manticore
-        $manticoreStart = microtime(true);
-        $manticoreResults = $this->search($term, $limit);
-        $manticoreDuration = (microtime(true) - $manticoreStart) * 1000;
-        
+        $rawResults = $this->search($term, $limit);
+
+        // registra impressioni per metrica avanzata
+        $this->metrics->recordImpressions($term, $rawResults);
+
+        // Espone solo i termini all'esterno, senza tipo
+        $publicResults = array_map(
+            static fn(array $item) => ['term' => $item['term']],
+            $rawResults
+        );
+
         // Salva in cache: termine + risultati Manticore
         wp_cache_set($cacheKey, [
             'term' => $term,
-            'results' => $manticoreResults,
+            'results' => $publicResults,
             'timestamp' => time()
         ], 'petbuy_user_search', HOUR_IN_SECONDS);
         
@@ -93,27 +111,12 @@ class QuickSearchService
         $this->addTokenToUserIndex($token);
         
         // **PRELOAD ASINCRONO**: Chiama /fsearch per precaricare risultati completi
-        $preloadStart = microtime(true);
         $this->preloadFullSearch($term, $token);
-        $preloadTriggerDuration = (microtime(true) - $preloadStart) * 1000;
-        
-        $totalDuration = (microtime(true) - $startTime) * 1000;
-        
-        error_log(sprintf(
-            "[QuickSearch] 🚀 ASYNC | Term: '%s' | Token: %s | " .
-            "Manticore: %.2fms | Preload: %.2fms | Total: %.2fms | Results: %d",
-            $term,
-            $token,
-            $manticoreDuration,
-            $preloadTriggerDuration,
-            $totalDuration,
-            count($manticoreResults)
-        ));
-        
+
         // Restituisce preview Manticore + token per API completa
         return [
             'token' => $token,
-            'results' => $manticoreResults,
+            'results' => $publicResults,
         ];
     }
 
@@ -129,8 +132,6 @@ class QuickSearchService
      */
     private function preloadFullSearch(string $term, string $token): void
     {
-        $triggerTime = microtime(true);
-        
         // WordPress NON spacchetta l'array, passa l'intero array come primo parametro
         // Quindi dobbiamo passare un array associativo come unico argomento
         wp_schedule_single_event(time(), 'petbuy_async_fullsearch', [[
@@ -143,15 +144,6 @@ class QuickSearchService
         // Forza l'esecuzione immediata dello scheduled event
         // spawn_cron() triggera il cron in background
         spawn_cron();
-        
-        $triggerDuration = (microtime(true) - $triggerTime) * 1000;
-        
-        error_log(sprintf(
-            "[Preload] ⚡ SCHEDULED | Token: %s | Term: '%s' | Time: %.2fms",
-            $token,
-            $term,
-            $triggerDuration
-        ));
     }
 
     /**
@@ -168,48 +160,73 @@ class QuickSearchService
         $userId = get_current_user_id();
         
         if (!$userId) {
-            // Guest user: genera client_id basato su IP + User-Agent
             $clientId = $this->getGuestClientId();
+            $scopeKey = 'guest_' . $clientId;
+            $suffix = $clientId;
         } else {
-            // Logged user: usa 'user' come identificatore
             $clientId = 'user';
+            $scopeKey = 'user_' . $userId;
+            $suffix = $clientId;
         }
         
-        // Counter incrementale per questo utente/client
-        $counterKey = "qsearch_counter_{$userId}_{$clientId}";
-        $counter = (int) wp_cache_get($counterKey, 'petbuy_user_search');
-        $counter++;
-        wp_cache_set($counterKey, $counter, 'petbuy_user_search', HOUR_IN_SECONDS);
+        $counter = $this->nextSequentialCounter($scopeKey);
         
-        // Formato: counter-userid-clientid
-        return "{$counter}-{$userId}-{$clientId}";
+        return "{$counter}-{$userId}-{$suffix}";
     }
     
     /**
-     * Genera un client ID univoco per utenti guest.
-     * Usa hash di IP + User-Agent per identificare il client.
-     * 
-     * @return string Client ID (8 caratteri)
+     * Genera/recupera un client ID persistente per utenti guest tramite cookie.
+     *
+     * @return string Client ID (16 caratteri esadecimali)
      */
     private function getGuestClientId(): string
     {
-        // Recupera IP reale (anche dietro proxy/CDN)
-        $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+        $cookieName = 'petbuy_qs_client';
+        $clientId = isset($_COOKIE[$cookieName]) ? sanitize_text_field(wp_unslash($_COOKIE[$cookieName])) : '';
         
-        // Controlla header comuni per IP reale dietro proxy
-        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ip = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
-        } elseif (!empty($_SERVER['HTTP_X_REAL_IP'])) {
-            $ip = $_SERVER['HTTP_X_REAL_IP'];
+        if ($clientId === '' || !preg_match('/^[a-f0-9]{16}$/', $clientId)) {
+            try {
+                $clientId = bin2hex(random_bytes(8));
+            } catch (\Exception $e) {
+                $clientId = strtolower(wp_generate_password(16, false, false));
+            }
+            
+            $this->setGuestClientCookie($cookieName, $clientId);
         }
         
-        // User-Agent per distinguere dispositivi diversi dallo stesso IP
-        $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
-        
-        // Hash corto (primi 8 caratteri MD5)
-        $clientId = substr(md5($ip . '|' . $userAgent), 0, 8);
-        
         return $clientId;
+    }
+
+    /**
+     * Imposta il cookie identificativo per gli utenti guest.
+     */
+    private function setGuestClientCookie(string $cookieName, string $clientId): void
+    {
+        $expire = time() + YEAR_IN_SECONDS;
+        $secure = is_ssl();
+        $path = defined('COOKIEPATH') ? COOKIEPATH : '/';
+        $domain = defined('COOKIE_DOMAIN') ? COOKIE_DOMAIN : '';
+
+        setcookie($cookieName, $clientId, $expire, $path ?: '/', $domain, $secure, true);
+        if (defined('SITECOOKIEPATH') && SITECOOKIEPATH !== $path) {
+            setcookie($cookieName, $clientId, $expire, SITECOOKIEPATH, $domain, $secure, true);
+        }
+
+        // Rende disponibile il cookie nella request corrente.
+        $_COOKIE[$cookieName] = $clientId;
+    }
+
+    /**
+     * Ritorna il prossimo contatore sequenziale persistente per utente/guest.
+     */
+    private function nextSequentialCounter(string $scopeKey): int
+    {
+        $counterKey = 'petbuy_qs_counter_' . md5($scopeKey);
+        $counter = (int) get_transient($counterKey);
+        $counter++;
+        // Manteniamo il contatore per 30 giorni; verrà ricreato se scade.
+        set_transient($counterKey, $counter, DAY_IN_SECONDS * 30);
+        return $counter;
     }
 
     /**
@@ -542,17 +559,86 @@ class QuickSearchService
         }
         $items = array_values($uniq);
 
-        // Ordina per _pct desc, poi alfabetico
+        // Applica punteggio QS (similarità + metriche)
+        $items = $this->applyMetricsScore($items);
+
+        // Ordina per punteggio discendente, poi alfabetico
         usort($items, function ($a, $b) {
-            if ($a['_pct'] === $b['_pct']) {
+            $scoreA = $a['_qs_score'] ?? $a['_pct'];
+            $scoreB = $b['_qs_score'] ?? $b['_pct'];
+            if ($scoreA === $scoreB) {
                 return strcasecmp($a['term'], $b['term']);
             }
-            return ($a['_pct'] > $b['_pct']) ? -1 : 1;
+            return ($scoreA > $scoreB) ? -1 : 1;
         });
 
         // Taglia e rimuove il campo interno _pct
         $items = array_slice($items, 0, $limit);
         return array_map(fn($x) => ['term' => $x['term'], 'type' => $x['type']], $items);
+    }
+
+    /**
+     * Combina similarità testuale con metriche storiche (CTR, completamenti, popolarità).
+     *
+     * @param array $items
+     * @return array
+     */
+    private function applyMetricsScore(array $items): array
+    {
+        if (empty($items)) {
+            return $items;
+        }
+
+        $metricsMap = $this->metrics->getMetricsForItems($items);
+
+        foreach ($items as &$item) {
+            $key = $this->buildMetricsKey($item['term'] ?? '', $item['type'] ?? 'pr');
+            $stats = $metricsMap[$key] ?? null;
+            $item['_qs_score'] = $this->computeCompositeScore((float) ($item['_pct'] ?? 0), $stats);
+        }
+        unset($item);
+
+        return $items;
+    }
+
+    /**
+     * Calcola un punteggio composito combinando similarità e comportamento utenti.
+     *
+     * @param float $baseScore
+     * @param array|null $stats
+     * @return float
+     */
+    private function computeCompositeScore(float $baseScore, ?array $stats): float
+    {
+        if ($stats === null) {
+            return $baseScore;
+        }
+
+        $hits = max(0, (int) ($stats['hits'] ?? 0));
+        $clicks = max(0, (int) ($stats['clicks'] ?? 0));
+        $completions = max(0, (int) ($stats['completed_searches'] ?? 0));
+
+        $ctr = ($hits > 0) ? ($clicks / $hits) : 0.0; // 0..1
+        $completionRate = ($clicks > 0) ? ($completions / $clicks) : 0.0; // 0..1
+
+        $popularityBoost = min(15.0, log($hits + 1) * 5);
+        $ctrBoost = min(25.0, $ctr * 25.0);
+        $completionBoost = min(10.0, $completionRate * 10.0);
+
+        $score = $baseScore + $popularityBoost + $ctrBoost + $completionBoost;
+        return min(150.0, $score);
+    }
+
+    private function buildMetricsKey(string $term, string $type): string
+    {
+        $normalizedTerm = mb_strtolower(trim($term), 'UTF-8');
+        $normalizedType = strtolower(trim($type));
+        $allowed = ['ad', 'pr', 'st'];
+        if (!in_array($normalizedType, $allowed, true)) {
+            $normalizedType = 'pr';
+        }
+
+        return $normalizedTerm . '|' . $normalizedType;
     }
 
     /** Normalizza i type del docstore in ad|pr (fallback pr) */
@@ -607,8 +693,6 @@ class QuickSearchService
      */
     public static function executeAsyncFullSearch(array $args = []): void
     {
-        $startTime = microtime(true);
-        
         // Estrai parametri dall'array
         $term = $args['term'] ?? '';
         $token = $args['token'] ?? '';
@@ -616,11 +700,6 @@ class QuickSearchService
         $perPage = $args['per_page'] ?? 20;
         
         if (empty($term) || empty($token)) {
-            error_log(sprintf(
-                "[AsyncFullSearch] ❌ INVALID_ARGS | Term: '%s' | Token: '%s'",
-                $term,
-                $token
-            ));
             return;
         }
         
@@ -638,30 +717,5 @@ class QuickSearchService
             'timeout' => 30,
             'sslverify' => false,
         ]);
-        
-        $duration = (microtime(true) - $startTime) * 1000;
-        
-        if (is_wp_error($response)) {
-            error_log(sprintf(
-                "[AsyncFullSearch] ❌ FAILED | Token: %s | Error: %s | Time: %.2fms",
-                $token,
-                $response->get_error_message(),
-                $duration
-            ));
-        } else {
-            $statusCode = wp_remote_retrieve_response_code($response);
-            $body = wp_remote_retrieve_body($response);
-            $dataSize = strlen($body);
-            
-            error_log(sprintf(
-                "[AsyncFullSearch] ✅ COMPLETED | Token: %s | Term: '%s' | " .
-                "Status: %d | Time: %.2fms | Size: %d bytes",
-                $token,
-                $term,
-                $statusCode,
-                $duration,
-                $dataSize
-            ));
-        }
     }
 }

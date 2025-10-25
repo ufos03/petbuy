@@ -41,6 +41,14 @@ class AdvertisementValidator
             $errors[] = "La descrizione della salute deve essere di almeno 100 caratteri";
         }
 
+        $categoryName = isset($params['category']) ? \sanitize_text_field($params['category']) : '';
+        $subCategoryName = isset($params['sub-category']) ? \sanitize_text_field($params['sub-category']) : '';
+
+        $termErrors = $this->validateCategoriesAgainstWordPress($categoryName, $subCategoryName);
+        if (!empty($termErrors)) {
+            $errors = array_merge($errors, $termErrors);
+        }
+
         // Valori booleani
         if (!in_array($params['gift'], ['T', 'F'])) {
             $errors[] = "Il parametro 'gift' deve essere 'T' o 'F'";
@@ -84,6 +92,57 @@ class AdvertisementValidator
             'valid' => empty($errors),
             'errors' => $errors
         ];
+    }
+
+    /**
+     * Verifica che categoria e sottocategoria esistano fra i termini di WordPress.
+     *
+     * @param string $category Categoria principale.
+     * @param string $subCategory Sottocategoria (opzionale).
+     * @return array Lista di errori; vuota se tutto è valido.
+     */
+    private function validateCategoriesAgainstWordPress(string $category, string $subCategory): array
+    {
+        $errors = [];
+
+        if ($category !== '' && !$this->termExistsInAllowedTaxonomies($category)) {
+            $errors[] = sprintf(
+                "La categoria '%s' non è valida. Seleziona una categoria presente nel catalogo.",
+                $category
+            );
+        }
+
+        if ($subCategory !== '' && !$this->termExistsInAllowedTaxonomies($subCategory)) {
+            $errors[] = sprintf(
+                "La sottocategoria '%s' non è valida. Seleziona una sottocategoria esistente.",
+                $subCategory
+            );
+        }
+
+        return $errors;
+    }
+
+    /**
+     * Cerca un termine per nome nelle tassonomie ammesse.
+     *
+     * @param string $termName Nome del termine da cercare.
+     * @return bool True se il termine esiste.
+     */
+    private function termExistsInAllowedTaxonomies(string $termName): bool
+    {
+        if ($termName === '') {
+            return false;
+        }
+
+        $taxonomies = ['product_cat', 'category'];
+        foreach ($taxonomies as $taxonomy) {
+            $term = \get_term_by('name', $termName, $taxonomy);
+            if ($term instanceof \WP_Term) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

@@ -11,7 +11,25 @@ class Plugin {
      * Metodo di attivazione del plugin.
      */
     public static function activate(): void {
-        // Qui puoi aggiungere codice da eseguire all'attivazione del plugin, se necessario.
+        global $wpdb;
+        $table = $wpdb->prefix . 'petbuy_qs_metrics';
+        $charset = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE {$table} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            term varchar(191) NOT NULL,
+            type varchar(10) NOT NULL DEFAULT 'pr',
+            hits bigint(20) unsigned NOT NULL DEFAULT 0,
+            clicks bigint(20) unsigned NOT NULL DEFAULT 0,
+            completed_searches bigint(20) unsigned NOT NULL DEFAULT 0,
+            last_seen_at datetime DEFAULT NULL,
+            last_clicked_at datetime DEFAULT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY term_type (term, type)
+        ) {$charset};";
+
+        require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+        \dbDelta( $sql );
     }
 
     public static function init(): void {
@@ -31,18 +49,46 @@ class Plugin {
             'rest_api_init',
             function () {
                 $service = new Search\QuickSearchService();
+                $metricsController = new Search\QuickSearchMetricsController();
                 register_rest_route(
                     'api/v1',
                     '/qsearch',
                     [
                         'methods'  => \WP_REST_Server::READABLE,
                         'callback' => [ $service, 'rest_search' ],
+                        'permission_callback' => '__return_true',
                         'args'     => [
                             's' => 
                             [
                                 'required' => true,
                                 'type'     => 'string',
                                 'description' => 'Termine di ricerca (min 3 caratteri)',
+                            ],
+                        ],
+                    ]
+                );
+                register_rest_route(
+                    'api/v1',
+                    '/qsearch/track',
+                    [
+                        'methods'  => \WP_REST_Server::CREATABLE,
+                        'callback' => [ $metricsController, 'track' ],
+                        'permission_callback' => '__return_true',
+                        'args' => [
+                            'event' => [
+                                'required' => true,
+                                'type' => 'string',
+                                'description' => 'Evento da registrare (click|complete)',
+                            ],
+                            'term' => [
+                                'required' => true,
+                                'type' => 'string',
+                                'description' => 'Termine del suggerimento interagito',
+                            ],
+                            'type' => [
+                                'required' => false,
+                                'type' => 'string',
+                                'description' => 'Tipo risultato (pr|ad|st)',
                             ],
                         ],
                     ]
